@@ -52,7 +52,7 @@
     "@angular/compiler-cli": "^19.0.0",
     "@angular/core": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
-    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^21.2.13",
     "@jest/globals": "^30.4.1",
     "@swc/core": "^1.15.33",
     "@types/jest": "^30.0.0",
