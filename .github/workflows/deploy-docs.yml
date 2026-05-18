@@ -1,9 +1,11 @@
-name: Deploy Docs
+name: Deploy Docs & Demo
 on:
   push:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'demo/**'
+      - 'src/**'
       - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
@@ -20,9 +22,32 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/configure-pages@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            demo/package-lock.json
+
+      # Build the wrapper library (needed by the demo)
+      - run: npm ci
+      - run: npm run build
+
+      # Build the demo Angular app
+      - run: npm ci
+        working-directory: demo
+      - run: npx ng build --base-href /flowchart-sequence-designer-angular/demo/
+        working-directory: demo
+
+      # Combine: docs/ as root, demo build under /demo/
+      - run: |
+          mkdir -p _site
+          cp -r docs/* _site/
+          cp -r demo/dist/browser _site/demo
+
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: docs
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v5
