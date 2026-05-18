@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "paths": {
+      "flowchart-sequence-designer": ["./src/__mocks__/fsd.ts"],
+      "flowchart-sequence-designer/ui": ["./src/__mocks__/fsd-ui.ts"],
+      "@angular/core": ["./src/__mocks__/@angular/core.ts"],
+      "@angular/common": ["./src/__mocks__/@angular/common.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.spec.ts"]
+}

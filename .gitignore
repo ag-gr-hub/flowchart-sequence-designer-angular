@@ -1,4 +1,18 @@
 node_modules/
 dist/
+*.js.map
+*.cjs.map
+.DS_Store
+
+# Secrets & credentials
+.env
+.env.*
+.env.local
+.npmrc
+
+# Build artifacts & logs
+coverage/
+*.log
 *.tgz
+.turbo/
 .angular/
