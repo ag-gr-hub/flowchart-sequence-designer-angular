@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Live demo
+    url: https://ag-gr-hub.github.io/flowchart-sequence-designer-angular/
+    about: See the Angular wrapper in action.
+  - name: Core library docs
+    url: https://www.npmjs.com/package/flowchart-sequence-designer
+    about: Documentation for the underlying diagram engine.
