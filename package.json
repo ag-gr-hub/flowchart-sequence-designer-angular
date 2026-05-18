@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@angular/common": "^19.0.0",
-    "@angular/compiler": "^19.0.0",
+    "@angular/compiler": "^21.2.13",
     "@angular/compiler-cli": "^19.0.0",
     "@angular/core": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
