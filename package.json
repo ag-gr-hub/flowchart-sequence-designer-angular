@@ -1,0 +1,68 @@
+{
+  "name": "@flowchart-sequence-designer/angular",
+  "version": "0.1.0",
+  "description": "Angular wrapper for flowchart-sequence-designer — renders the React-based diagram editor inside Angular standalone components",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ag-gr-hub/flowchart-sequence-designer-angular.git"
+  },
+  "keywords": [
+    "angular",
+    "flowchart",
+    "sequence-diagram",
+    "diagram-editor",
+    "svg"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup && tsc --declaration --emitDeclarationOnly --outDir dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=16",
+    "@angular/core": ">=16",
+    "flowchart-sequence-designer": ">=1.2.0",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/compiler": "^19.0.0",
+    "@angular/compiler-cli": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@swc/core": "^1.15.33",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "flowchart-sequence-designer": "^1.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "rxjs": "^7.8.0",
+    "tsup": "^8",
+    "typescript": "~5.6.0",
+    "zone.js": "^0.15.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
