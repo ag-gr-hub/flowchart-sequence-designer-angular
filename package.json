@@ -33,8 +33,10 @@
   "scripts": {
     "build": "tsup && tsc --declaration --emitDeclarationOnly --outDir dist",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --ext .ts",
     "test": "jest",
+    "format": "prettier --write \"src/**/*.ts\" \"*.json\" \"*.md\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"*.json\" \"*.md\"",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -51,13 +53,18 @@
     "@angular/core": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
+    "@jest/globals": "^30.4.1",
     "@swc/core": "^1.15.33",
+    "@types/jest": "^30.0.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "flowchart-sequence-designer": "^1.2.3",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "react": "^18",
     "react-dom": "^18",
     "rxjs": "^7.8.0",
+    "ts-jest": "^29.4.9",
     "tsup": "^8",
     "typescript": "~5.6.0",
     "zone.js": "^0.15.0"

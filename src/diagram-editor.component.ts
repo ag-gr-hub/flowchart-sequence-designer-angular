@@ -1,8 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -10,6 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import type { DiagramModel, ExportFormat } from "flowchart-sequence-designer";
 import type { DiagramEditorProps, ThemeColors } from "flowchart-sequence-designer/ui";
 import { ReactBridge } from "./react-bridge";
@@ -17,7 +20,19 @@ import { ReactBridge } from "./react-bridge";
 @Component({
   selector: "fsd-diagram",
   standalone: true,
-  template: `<div #container [style.height]="height ?? '500px'" style="width:100%"></div>`,
+  imports: [CommonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <div #container [style.height]="height ?? '500px'" style="width:100%">
+      <span *ngIf="loading" class="fsd-loading">Loading editor…</span>
+      <span *ngIf="error" class="fsd-error">{{ error }}</span>
+    </div>
+  `,
+  styles: [`
+    :host { display: block; }
+    .fsd-loading { color: #888; font-size: 14px; padding: 16px; display: inline-block; }
+    .fsd-error { color: #c00; font-size: 14px; padding: 16px; display: inline-block; }
+  `],
 })
 export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild("container", { static: true }) containerRef!: ElementRef<HTMLElement>;
@@ -33,21 +48,46 @@ export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
   @Output() modelChange = new EventEmitter<DiagramModel>();
   @Output() exportEvent = new EventEmitter<{ format: ExportFormat; content: string | Blob }>();
 
+  loading = true;
+  error: string | null = null;
+
   private bridge: ReactBridge<DiagramEditorProps> | null = null;
 
+  constructor(private zone: NgZone) {}
+
   ngOnInit(): void {
-    import("flowchart-sequence-designer/ui").then(({ DiagramEditor }) => {
-      this.bridge = new ReactBridge<DiagramEditorProps>(DiagramEditor, this.buildProps());
-      this.bridge.mount(this.containerRef.nativeElement);
-    });
+    import("flowchart-sequence-designer/ui").then(
+      ({ DiagramEditor }) => {
+        this.loading = false;
+        this.bridge = new ReactBridge<DiagramEditorProps>(
+          DiagramEditor,
+          this.buildProps(),
+          this.zone,
+        );
+        this.bridge.mount(this.containerRef.nativeElement);
+      },
+      (err) => {
+        this.loading = false;
+        this.error = `Failed to load editor: ${err?.message ?? err}`;
+      },
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.bridge) return;
-    // Only update non-initial props (initialModel is only read once by the React component)
+    if ("initialModel" in changes && !changes["initialModel"].firstChange) {
+      // Force full re-mount when initialModel changes (React treats it as initial state)
+      this.bridge.unmount();
+      this.bridge = new ReactBridge<DiagramEditorProps>(
+        this.bridge["component"],
+        this.buildProps(),
+        this.zone,
+      );
+      this.bridge.mount(this.containerRef.nativeElement);
+      return;
+    }
     const updateKeys = ["height", "allowedExports", "allowImport", "variant", "theme", "themeOverrides"];
-    const hasRelevant = updateKeys.some((k) => k in changes);
-    if (hasRelevant) {
+    if (updateKeys.some((k) => k in changes)) {
       this.bridge.update(this.buildProps());
     }
   }
@@ -60,9 +100,9 @@ export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
   private buildProps(): DiagramEditorProps {
     return {
       initialModel: this.initialModel,
-      onChange: (model: DiagramModel) => this.modelChange.emit(model),
+      onChange: (model: DiagramModel) => this.zone.run(() => this.modelChange.emit(model)),
       onExport: (format: ExportFormat, content: string | Blob) =>
-        this.exportEvent.emit({ format, content }),
+        this.zone.run(() => this.exportEvent.emit({ format, content })),
       height: this.height,
       allowedExports: this.allowedExports,
       allowImport: this.allowImport,

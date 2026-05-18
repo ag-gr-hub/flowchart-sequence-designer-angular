@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@flowchart-sequence-designer/angular — Docs &amp; Demo</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --card: #fff;
+      --text: #1a1a2e;
+      --accent: #4361ee;
+      --accent-light: #e8edff;
+      --border: #e2e8f0;
+      --code-bg: #1e1e2e;
+      --code-fg: #cdd6f4;
+      --radius: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f0f1a;
+        --card: #1a1a2e;
+        --text: #e2e8f0;
+        --accent: #7c8aff;
+        --accent-light: #1e1e3a;
+        --border: #2d2d44;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    header p { color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+    .badges { margin-top: 1rem; }
+    .badges img { margin: 0 4px; vertical-align: middle; }
+    .install-box {
+      background: var(--code-bg);
+      color: var(--code-fg);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.9rem;
+      margin: 1.5rem 0;
+      position: relative;
+      overflow-x: auto;
+    }
+    .install-box .prompt { color: #89b4fa; }
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #333;
+      border: none;
+      color: #cdd6f4;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.75rem;
+    }
+    .copy-btn:hover { background: #555; }
+    h2 {
+      font-size: 1.5rem;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
+    }
+    h3 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; color: var(--accent); }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .component-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .component-card:hover { border-color: var(--accent); }
+    .component-card h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .component-card code {
+      font-size: 0.8rem;
+      background: var(--accent-light);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    .component-card p { font-size: 0.9rem; margin-top: 0.5rem; color: #666; }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-fg);
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+    }
+    code { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 0.6rem 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th { font-weight: 600; background: var(--accent-light); }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 0.4rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .feature-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .demo-frame {
+      width: 100%;
+      height: 550px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 0;
+    }
+    .tab {
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 0.9rem;
+      color: var(--text);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+    .tab.active { border-bottom-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    footer {
+      margin-top: 4rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    .arch-diagram {
+      background: var(--accent-light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      font-family: monospace;
+      font-size: 0.85rem;
+      line-height: 2;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>@flowchart-sequence-designer/angular</h1>
+    <p>Embed a powerful SVG flowchart &amp; sequence-diagram editor in any Angular 16+ application with standalone components.</p>
+    <div class="badges">
+      <a href="https://www.npmjs.com/package/@flowchart-sequence-designer/angular"><img src="https://img.shields.io/npm/v/@flowchart-sequence-designer/angular" alt="npm"></a>
+      <a href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular/actions"><img src="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular/actions/workflows/test.yml/badge.svg" alt="CI"></a>
+      <img src="https://img.shields.io/badge/Angular-16%2B-dd0031" alt="Angular 16+">
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Install -->
+    <div class="install-box">
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('npm install @flowchart-sequence-designer/angular flowchart-sequence-designer react react-dom')">Copy</button>
+      <span class="prompt">$</span> npm install @flowchart-sequence-designer/angular flowchart-sequence-designer react react-dom
+    </div>
+
+    <!-- Components -->
+    <h2>Components</h2>
+    <div class="component-grid">
+      <div class="component-card">
+        <h4>FsdDiagramComponent</h4>
+        <code>&lt;fsd-diagram&gt;</code>
+        <p>Full diagram editor supporting flowchart, question-tree, and journey variants.</p>
+      </div>
+      <div class="component-card">
+        <h4>FsdSequenceComponent</h4>
+        <code>&lt;fsd-sequence&gt;</code>
+        <p>Sequence diagram editor with drag-to-reorder messages and inline editing.</p>
+      </div>
+      <div class="component-card">
+        <h4>FsdToolbarComponent</h4>
+        <code>&lt;fsd-toolbar&gt;</code>
+        <p>Standalone export/import toolbar for custom editor layouts.</p>
+      </div>
+      <div class="component-card">
+        <h4>FsdStepEditorComponent</h4>
+        <code>&lt;fsd-step-editor&gt;</code>
+        <p>Node property editor panel for detailed node configuration.</p>
+      </div>
+    </div>
+
+    <!-- Usage Examples -->
+    <h2>Usage Examples</h2>
+
+    <div class="tab-bar">
+      <button class="tab active" onclick="showTab('flowchart')">Flowchart</button>
+      <button class="tab" onclick="showTab('sequence')">Sequence</button>
+      <button class="tab" onclick="showTab('toolbar')">Custom Layout</button>
+    </div>
+
+    <div id="tab-flowchart" class="tab-content active">
+      <pre><code>import { Component } from '@angular/core';
+import { FsdDiagramComponent } from '@flowchart-sequence-designer/angular';
+import type { DiagramModel } from '@flowchart-sequence-designer/angular';
+
+@Component({
+  selector: 'app-flowchart',
+  standalone: true,
+  imports: [FsdDiagramComponent],
+  template: \`
+    &lt;fsd-diagram
+      [height]="600"
+      [theme]="'dark'"
+      [variant]="'flowchart'"
+      [allowImport]="true"
+      (modelChange)="onModelChange($event)"
+      (exportEvent)="onExport($event)"
+    /&gt;
+  \`,
+})
+export class FlowchartComponent {
+  onModelChange(model: DiagramModel) {
+    console.log('Nodes:', model.nodes?.length);
+  }
+
+  onExport(e: { format: string; content: string | Blob }) {
+    // Handle SVG, PNG, Mermaid, PlantUML, JSON exports
+  }
+}</code></pre>
+    </div>
+
+    <div id="tab-sequence" class="tab-content">
+      <pre><code>import { Component } from '@angular/core';
+import {
+  FsdSequenceComponent,
+  presetSequenceModel,
+} from '@flowchart-sequence-designer/angular';
+
+@Component({
+  selector: 'app-sequence',
+  standalone: true,
+  imports: [FsdSequenceComponent],
+  template: \`
+    &lt;fsd-sequence
+      [initialModel]="model"
+      [height]="500"
+      [theme]="'auto'"
+      (modelChange)="model = $event"
+    /&gt;
+  \`,
+})
+export class SequenceComponent {
+  model = presetSequenceModel();
+}</code></pre>
+    </div>
+
+    <div id="tab-toolbar" class="tab-content">
+      <pre><code>import { Component } from '@angular/core';
+import {
+  FsdDiagramComponent,
+  FsdToolbarComponent,
+  FsdStepEditorComponent,
+} from '@flowchart-sequence-designer/angular';
+
+@Component({
+  selector: 'app-custom-layout',
+  standalone: true,
+  imports: [FsdDiagramComponent, FsdToolbarComponent, FsdStepEditorComponent],
+  template: \`
+    &lt;div class="editor-layout"&gt;
+      &lt;fsd-toolbar
+        [allowedExports]="['svg', 'png', 'mermaid']"
+        [allowImport]="true"
+        (exportRequest)="handleExport($event)"
+        (importRequest)="handleImport($event)"
+      /&gt;
+      &lt;div class="editor-body"&gt;
+        &lt;fsd-diagram
+          [initialModel]="model"
+          [height]="400"
+          (modelChange)="model = $event"
+        /&gt;
+        &lt;fsd-step-editor
+          *ngIf="selectedNodeId"
+          [nodeId]="selectedNodeId"
+          [model]="model"
+          (modelChange)="model = $event"
+        /&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  \`,
+})
+export class CustomLayoutComponent {
+  model: any;
+  selectedNodeId: string | null = null;
+
+  handleExport(format: string) { /* ... */ }
+  handleImport(text: string) { /* ... */ }
+}</code></pre>
+    </div>
+
+    <!-- API Reference -->
+    <h2>API Reference</h2>
+
+    <h3>&lt;fsd-diagram&gt; Inputs</h3>
+    <table>
+      <tr><th>Input</th><th>Type</th><th>Default</th><th>Description</th></tr>
+      <tr><td><code>initialModel</code></td><td><code>DiagramModel</code></td><td>preset</td><td>Pre-populate the editor</td></tr>
+      <tr><td><code>height</code></td><td><code>string | number</code></td><td><code>'500px'</code></td><td>Container height</td></tr>
+      <tr><td><code>allowedExports</code></td><td><code>ExportFormat[]</code></td><td>all</td><td>Restrict export menu</td></tr>
+      <tr><td><code>allowImport</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Show import button</td></tr>
+      <tr><td><code>variant</code></td><td><code>'flowchart' | 'question' | 'journey'</code></td><td><code>'flowchart'</code></td><td>Editor variant</td></tr>
+      <tr><td><code>theme</code></td><td><code>'light' | 'dark' | 'auto'</code></td><td><code>'light'</code></td><td>Color theme</td></tr>
+      <tr><td><code>themeOverrides</code></td><td><code>Partial&lt;ThemeColors&gt;</code></td><td>—</td><td>Custom colors</td></tr>
+    </table>
+
+    <h3>&lt;fsd-diagram&gt; Outputs</h3>
+    <table>
+      <tr><th>Output</th><th>Payload</th><th>Description</th></tr>
+      <tr><td><code>modelChange</code></td><td><code>DiagramModel</code></td><td>Emitted on every edit</td></tr>
+      <tr><td><code>exportEvent</code></td><td><code>{ format, content }</code></td><td>Emitted when user exports</td></tr>
+    </table>
+
+    <h3>&lt;fsd-sequence&gt;</h3>
+    <p>Same inputs/outputs as <code>&lt;fsd-diagram&gt;</code> except no <code>variant</code> input.</p>
+
+    <h3>&lt;fsd-toolbar&gt;</h3>
+    <table>
+      <tr><th>Input</th><th>Type</th><th>Description</th></tr>
+      <tr><td><code>allowedExports</code></td><td><code>ExportFormat[]</code></td><td>Which formats to show</td></tr>
+      <tr><td><code>allowImport</code></td><td><code>boolean</code></td><td>Show import button</td></tr>
+    </table>
+    <table>
+      <tr><th>Output</th><th>Payload</th><th>Description</th></tr>
+      <tr><td><code>exportRequest</code></td><td><code>ExportFormat</code></td><td>Format user chose</td></tr>
+      <tr><td><code>importRequest</code></td><td><code>string</code></td><td>Raw imported text</td></tr>
+    </table>
+
+    <h3>&lt;fsd-step-editor&gt;</h3>
+    <table>
+      <tr><th>Input</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      <tr><td><code>nodeId</code></td><td><code>string</code></td><td>✓</td><td>Node to edit</td></tr>
+      <tr><td><code>model</code></td><td><code>DiagramModel</code></td><td>✓</td><td>Current model</td></tr>
+      <tr><td><code>variant</code></td><td><code>DiagramVariant</code></td><td></td><td>Editor variant</td></tr>
+      <tr><td><code>isDark</code></td><td><code>boolean</code></td><td></td><td>Dark mode</td></tr>
+      <tr><td><code>themeColors</code></td><td><code>ThemeColors</code></td><td></td><td>Theme overrides</td></tr>
+    </table>
+
+    <!-- Architecture -->
+    <h2>Architecture</h2>
+    <div class="arch-diagram">
+      ┌─────────────────────────────────────────────────────────┐<br>
+      │  Angular Application (Zone.js)                          │<br>
+      │  ┌───────────────────────────────────────────────────┐  │<br>
+      │  │  &lt;fsd-diagram&gt; (OnPush, standalone)             │  │<br>
+      │  │  ┌─────────────────────────────────────────────┐  │  │<br>
+      │  │  │  React Bridge (runs outside NgZone)         │  │  │<br>
+      │  │  │  ┌───────────────────────────────────────┐  │  │  │<br>
+      │  │  │  │  React Root → DiagramEditor           │  │  │  │<br>
+      │  │  │  │  (SVG canvas, toolbar, import/export) │  │  │  │<br>
+      │  │  │  └───────────────────────────────────────┘  │  │  │<br>
+      │  │  └─────────────────────────────────────────────┘  │  │<br>
+      │  │  onChange → NgZone.run() → modelChange.emit()     │  │<br>
+      │  └───────────────────────────────────────────────────┘  │<br>
+      └─────────────────────────────────────────────────────────┘<br>
+    </div>
+
+    <h3>Key Design Decisions</h3>
+    <ul class="feature-list">
+      <li><strong>OnPush compatible</strong> — all components use ChangeDetectionStrategy.OnPush</li>
+      <li><strong>Zone-optimized</strong> — React renders run outside NgZone; only outputs trigger CD</li>
+      <li><strong>Lazy-loaded</strong> — React editor loaded via dynamic import() (tree-shake friendly)</li>
+      <li><strong>Error handled</strong> — Loading and error states shown while editor initializes</li>
+      <li><strong>Model reset</strong> — Changing initialModel after init re-mounts the full editor</li>
+      <li><strong>Minimal overhead</strong> — Bridge is ~1KB; React+ReactDOM add ~45KB gzipped</li>
+    </ul>
+
+    <!-- Live Demo -->
+    <h2>Live Demo</h2>
+    <p>Try the underlying editor (same React component rendered by the Angular wrapper):</p>
+    <iframe class="demo-frame" src="https://ag-gr-hub.github.io/flowchart-sequence-designer/" title="Editor Demo" loading="lazy"></iframe>
+
+    <!-- Setup -->
+    <h2>CI/CD Setup</h2>
+    <div class="card">
+      <h3>Auto-publish to npm on Git Tags</h3>
+      <p>This package auto-publishes to npm when you push a <code>v*</code> tag. Setup steps:</p>
+      <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
+        <li>Go to <a href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular/settings/secrets/actions">Repository Settings → Secrets → Actions</a></li>
+        <li>Click <strong>New repository secret</strong></li>
+        <li>Name: <code>NPM_TOKEN</code></li>
+        <li>Value: Your npm access token (generate at <a href="https://www.npmjs.com/settings/~/tokens">npmjs.com/settings/tokens</a>)</li>
+        <li>To publish: <code>npm version patch && git push origin main --tags</code></li>
+      </ol>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      <a href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular">GitHub</a> ·
+      <a href="https://www.npmjs.com/package/@flowchart-sequence-designer/angular">npm</a> ·
+      <a href="https://www.npmjs.com/package/flowchart-sequence-designer">Core Library</a>
+    </p>
+    <p style="margin-top: 0.5rem;">MIT License © 2025</p>
+  </footer>
+
+  <script>
+    function showTab(name) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

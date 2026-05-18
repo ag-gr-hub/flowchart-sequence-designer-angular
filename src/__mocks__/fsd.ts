@@ -1,0 +1,9 @@
+// Mock for flowchart-sequence-designer core
+export type DiagramModel = any;
+export type DiagramNode = any;
+export type DiagramEdge = any;
+export type DiagramType = string;
+export type DiagramVariant = string;
+export type ExportFormat = string;
+export type NodeShape = string;
+export type SequenceMessage = any;
