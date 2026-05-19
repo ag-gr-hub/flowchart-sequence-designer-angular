@@ -37,7 +37,7 @@ describe("FsdDiagramComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     zone = createMockZone();
-    component = new FsdDiagramComponent(zone as any);
+    component = new FsdDiagramComponent(zone as any, { markForCheck() {}, detectChanges() {} } as any);
     component.containerRef = { nativeElement: document.createElement("div") } as any;
   });
 
@@ -113,7 +113,7 @@ describe("FsdDiagramComponent", () => {
 describe("FsdSequenceComponent", () => {
   it("should load SequenceEditor", async () => {
     const zone = createMockZone();
-    const component = new FsdSequenceComponent(zone as any);
+    const component = new FsdSequenceComponent(zone as any, { markForCheck() {}, detectChanges() {} } as any);
     component.containerRef = { nativeElement: document.createElement("div") } as any;
     component.ngOnInit();
     await flushPromises();

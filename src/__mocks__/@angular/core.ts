@@ -19,6 +19,11 @@ export class NgZone {
   runOutsideAngular<T>(fn: () => T): T { return fn(); }
 }
 
+export class ChangeDetectorRef {
+  markForCheck(): void {}
+  detectChanges(): void {}
+}
+
 // Decorators (no-ops)
 export function Component(_: any): ClassDecorator { return (target: any) => target; }
 export function Input(_?: any): PropertyDecorator { return () => {}; }
