@@ -222,6 +222,7 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
     .editor-area {
       flex: 1;
       overflow: hidden;
+      height: 100%;
     }
 
     .status-bar {
@@ -250,7 +251,7 @@ export class AppComponent {
   tab: 'flowchart' | 'question' | 'journey' | 'sequence' = 'flowchart';
   themes: ('light' | 'dark' | 'auto')[] = ['light', 'auto', 'dark'];
   lastExport: { format: string; preview: string } | null = null;
-  editorHeight = 'calc(100vh - 140px)';
+  editorHeight = '100%';
 
   private currentFlowchart = this.flowchartModel;
   private currentSequence = this.sequenceModel;
