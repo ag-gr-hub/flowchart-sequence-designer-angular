@@ -37,14 +37,13 @@ jobs:
       # Build the demo Angular app
       - run: npm ci
         working-directory: demo
-      - run: npx ng build --base-href /flowchart-sequence-designer-angular/demo/
+      - run: npx ng build --base-href /flowchart-sequence-designer-angular/
         working-directory: demo
 
-      # Combine: docs/ as root, demo build under /demo/
+      # Deploy the demo app as the root page (proves the wrapper works)
       - run: |
           mkdir -p _site
-          cp -r docs/* _site/
-          cp -r demo/dist/browser _site/demo
+          cp -r demo/dist/browser/* _site/
 
       - uses: actions/upload-pages-artifact@v5
         with:
