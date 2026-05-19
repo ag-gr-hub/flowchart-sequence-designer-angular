@@ -251,7 +251,7 @@ export class AppComponent {
   tab: 'flowchart' | 'question' | 'journey' | 'sequence' = 'flowchart';
   themes: ('light' | 'dark' | 'auto')[] = ['light', 'auto', 'dark'];
   lastExport: { format: string; preview: string } | null = null;
-  editorHeight = '100%';
+  editorHeight = 'calc(100vh - 130px)';
 
   private currentFlowchart = this.flowchartModel;
   private currentSequence = this.sequenceModel;
