@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -23,10 +24,9 @@ import { ReactBridge } from "./react-bridge";
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div #container [style.height]="height ?? '500px'" style="width:100%">
-      <span *ngIf="loading" class="fsd-loading">Loading editor…</span>
-      <span *ngIf="error" class="fsd-error">{{ error }}</span>
-    </div>
+    <span *ngIf="loading" class="fsd-loading">Loading editor…</span>
+    <span *ngIf="error" class="fsd-error">{{ error }}</span>
+    <div #container [style.height.px]="normalizedHeight" [style.display]="loading || error ? 'none' : 'block'" style="width:100%"></div>
   `,
   styles: [`
     :host { display: block; }
@@ -53,7 +53,13 @@ export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
 
   private bridge: ReactBridge<DiagramEditorProps> | null = null;
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private cdr: ChangeDetectorRef) {}
+
+  get normalizedHeight(): number {
+    if (typeof this.height === 'number') return this.height;
+    if (typeof this.height === 'string') return parseInt(this.height, 10) || 500;
+    return 500;
+  }
 
   ngOnInit(): void {
     import("flowchart-sequence-designer/ui").then(
@@ -65,10 +71,12 @@ export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
           this.zone,
         );
         this.bridge.mount(this.containerRef.nativeElement);
+        this.cdr.markForCheck();
       },
       (err) => {
         this.loading = false;
         this.error = `Failed to load editor: ${err?.message ?? err}`;
+        this.cdr.markForCheck();
       },
     );
   }
@@ -103,7 +111,7 @@ export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
       onChange: (model: DiagramModel) => this.zone.run(() => this.modelChange.emit(model)),
       onExport: (format: ExportFormat, content: string | Blob) =>
         this.zone.run(() => this.exportEvent.emit({ format, content })),
-      height: this.height,
+      height: "100%",
       allowedExports: this.allowedExports,
       allowImport: this.allowImport,
       variant: this.variant,
