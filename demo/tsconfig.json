@@ -19,7 +19,15 @@
     "lib": ["ES2022", "dom"],
     "skipLibCheck": true,
     "paths": {
-      "@flowchart-sequence-designer/angular": ["../src/index.ts"]
+      "@flowchart-sequence-designer/angular": ["../src/index.ts"],
+      "@angular/core": ["./node_modules/@angular/core"],
+      "@angular/core/*": ["./node_modules/@angular/core/*"],
+      "@angular/common": ["./node_modules/@angular/common"],
+      "@angular/common/*": ["./node_modules/@angular/common/*"],
+      "@angular/platform-browser": ["./node_modules/@angular/platform-browser"],
+      "@angular/platform-browser/*": ["./node_modules/@angular/platform-browser/*"],
+      "@angular/compiler": ["./node_modules/@angular/compiler"],
+      "@angular/compiler/*": ["./node_modules/@angular/compiler/*"]
     }
   },
   "angularCompilerOptions": {

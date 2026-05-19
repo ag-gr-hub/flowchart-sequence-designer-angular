@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
   FsdDiagramComponent,
   FsdSequenceComponent,
@@ -11,7 +11,7 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FsdDiagramComponent, FsdSequenceComponent],
+  imports: [JsonPipe, FsdDiagramComponent, FsdSequenceComponent],
   template: `
     <h1>@flowchart-sequence-designer/angular</h1>
     <p>Interactive demo of the Angular wrapper components.</p>
@@ -41,10 +41,12 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
         (modelChange)="onFlowchartChange($event)"
         (exportEvent)="onExport($event)"
       />
-      <div class="model-output" *ngIf="lastExport">
-        <strong>Last export ({{ lastExport.format }}):</strong><br>
-        {{ lastExport.preview }}
-      </div>
+      @if (lastExport) {
+        <div class="model-output">
+          <strong>Last export ({{ lastExport.format }}):</strong><br>
+          {{ lastExport.preview }}
+        </div>
+      }
     </div>
 
     <!-- Sequence Editor -->
