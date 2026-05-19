@@ -58,13 +58,25 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
           <div class="sidebar-heading">Documentation</div>
           <a href="#install">Install</a>
           <a href="#quick-start">Quick Start</a>
-          <div class="sidebar-group">Components</div>
-          <a href="#fsd-diagram">fsd-diagram</a>
-          <a href="#fsd-sequence">fsd-sequence</a>
+          <div class="sidebar-group">Diagram Guides</div>
+          <a href="#flowchart-guide">Flowchart</a>
+          <a href="#question-guide">Question</a>
+          <a href="#journey-guide">Journey</a>
+          <a href="#sequence-guide">Sequence</a>
+          <div class="sidebar-group">Builder APIs</div>
+          <a href="#flowchart-api">flowchart()</a>
+          <a href="#sequence-api">sequence()</a>
+          <a href="#model-api">Model (low-level)</a>
           <div class="sidebar-group">Reference</div>
-          <a href="#inputs">Inputs</a>
-          <a href="#outputs">Outputs</a>
+          <a href="#import">Import</a>
+          <a href="#export">Export formats</a>
+          <a href="#presets">Presets</a>
+          <a href="#angular-ui">Angular UI</a>
+          <a href="#editor-features">Editor features</a>
           <a href="#theming">Theming</a>
+          <a href="#a11y">Accessibility &amp; touch</a>
+          <a href="#shortcuts">Keyboard shortcuts</a>
+          <a href="#inputs">Component props</a>
           <a href="#types">TypeScript Types</a>
           <div class="sidebar-divider"></div>
           <a href="https://ag-gr-hub.github.io/flowchart-sequence-designer/" target="_blank">↗ React Version</a>
@@ -94,8 +106,9 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
           <!-- Install -->
           <section id="install">
             <h2>Install</h2>
-            <div class="code-block"><code>npm install &#64;flowchart-sequence-designer/angular</code></div>
-            <p class="docs-note">Peer dependencies: Angular 17+, flowchart-sequence-designer, react, react-dom</p>
+            <div class="code-block"><code>npm install &#64;flowchart-sequence-designer/angular flowchart-sequence-designer react react-dom</code></div>
+            <p class="docs-note">Peer dependencies: Angular 16+, flowchart-sequence-designer, react, react-dom. The core API has zero runtime dependencies.</p>
+            <p>Four diagram types ship in one package — pick the one that fits the story you're telling. Each gets its own deep-dive guide below.</p>
           </section>
 
           <!-- Quick Start -->
@@ -120,54 +133,326 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
   model = presetFlowchartModel(<span class="str">'flowchart'</span>);
   onModelChange(m: DiagramModel) {{ '{' }} console.log(m); {{ '}' }}
 {{ '}' }}</code></div>
+            <p>That's it — no provider, no theme setup, no required inputs. The editor mounts with a sample diagram, a working toolbar, undo/redo, drag-to-pan, scroll-to-zoom, and export buttons.</p>
           </section>
 
-          <!-- Components -->
-          <section id="fsd-diagram">
-            <h2>&lt;fsd-diagram&gt;</h2>
-            <p>Full-featured flowchart editor with drag-and-drop, connection drawing, and export capabilities.</p>
+          <!-- Diagram Guides -->
+          <section id="flowchart-guide">
+            <h2>Flowchart</h2>
+            <p>General purpose — any shapes, freeform connections. Use this variant for process diagrams, decision trees, system architectures, or any graph where nodes connect freely. Supports rectangle, diamond, circle, and parallelogram shapes.</p>
+            <div class="code-block"><code>&lt;fsd-diagram [variant]="<span class="str">'flowchart'</span>" /&gt;</code></div>
+          </section>
+
+          <section id="question-guide">
+            <h2>Question Flow</h2>
+            <p>Each node is a question with lettered answer options (A, B, C…). Each answer has its own connection port, so you can route specific answers to specific nodes. Perfect for surveys, quizzes, decision wizards, and branching logic.</p>
+            <div class="code-block"><code>&lt;fsd-diagram [variant]="<span class="str">'question'</span>" /&gt;</code></div>
+          </section>
+
+          <section id="journey-guide">
+            <h2>Journey Map</h2>
+            <p>Numbered milestone steps — user path or process walkthrough. Nodes are auto-numbered and connected in sequence. Great for user journeys, onboarding flows, and step-by-step processes.</p>
+            <div class="code-block"><code>&lt;fsd-diagram [variant]="<span class="str">'journey'</span>" /&gt;</code></div>
+          </section>
+
+          <section id="sequence-guide">
+            <h2>Sequence Diagram</h2>
+            <p>Actor lifelines with ordered messages between them. Actors are displayed as columns with messages drawn as arrows between lifelines. Supports solid and dashed message styles. Drag message rows to reorder, drag actor columns to rearrange lifelines.</p>
+            <div class="code-block"><code>&lt;fsd-sequence [theme]="<span class="str">'auto'</span>" (modelChange)="onModelChange($event)" /&gt;</code></div>
+          </section>
+
+          <!-- Builder APIs -->
+          <section id="flowchart-api">
+            <h2>flowchart() — builder reference</h2>
+            <p>Build a diagram with a fluent chainable API. Nodes and edges are validated at call time.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }} flowchart {{ '}' }} <span class="kw">from</span> <span class="str">'flowchart-sequence-designer'</span>;
+
+<span class="kw">const</span> diagram = flowchart(<span class="str">'Order Flow'</span>)
+  .node(<span class="str">'start'</span>,   <span class="str">'Start'</span>,          {{ '{' }} shape: <span class="str">'circle'</span> {{ '}' }})
+  .node(<span class="str">'check'</span>,   <span class="str">'Payment valid?'</span>, {{ '{' }} shape: <span class="str">'diamond'</span> {{ '}' }})
+  .node(<span class="str">'success'</span>, <span class="str">'Confirm order'</span>,  {{ '{' }} shape: <span class="str">'rectangle'</span> {{ '}' }})
+  .node(<span class="str">'fail'</span>,    <span class="str">'Reject'</span>,         {{ '{' }} shape: <span class="str">'rectangle'</span> {{ '}' }})
+  .edge(<span class="str">'start'</span>,   <span class="str">'check'</span>)
+  .edge(<span class="str">'check'</span>,   <span class="str">'success'</span>, {{ '{' }} label: <span class="str">'Yes'</span> {{ '}' }})
+  .edge(<span class="str">'check'</span>,   <span class="str">'fail'</span>,    {{ '{' }} label: <span class="str">'No'</span> {{ '}' }});
+
+console.log(diagram.toMermaid());</code></div>
+
+            <h3>Node shapes</h3>
             <table class="props-table">
-              <tr><th>Input</th><th>Type</th><th>Description</th></tr>
-              <tr><td><code>[initialModel]</code></td><td>DiagramModel</td><td>Initial diagram data</td></tr>
-              <tr><td><code>[height]</code></td><td>string | number</td><td>Editor height (px, %, calc, vh)</td></tr>
-              <tr><td><code>[variant]</code></td><td>'flowchart' | 'question' | 'journey'</td><td>Editor variant</td></tr>
-              <tr><td><code>[theme]</code></td><td>'light' | 'dark' | 'auto'</td><td>Color theme</td></tr>
-              <tr><td><code>[allowImport]</code></td><td>boolean</td><td>Show import button</td></tr>
-              <tr><td><code>[allowedExports]</code></td><td>ExportFormat[]</td><td>Enabled export formats</td></tr>
-              <tr><td><code>[themeOverrides]</code></td><td>Partial&lt;ThemeColors&gt;</td><td>Custom color overrides</td></tr>
+              <tr><th>Shape</th><th>Description</th></tr>
+              <tr><td><code>rectangle</code></td><td>Standard process box (default)</td></tr>
+              <tr><td><code>diamond</code></td><td>Decision / branch</td></tr>
+              <tr><td><code>circle</code></td><td>Start or end terminal</td></tr>
+              <tr><td><code>parallelogram</code></td><td>Input / output</td></tr>
             </table>
+
+            <h3>Edge options</h3>
+            <div class="code-block"><code>.edge(from, to, {{ '{' }}
+  label?: <span class="kw">string</span>,
+  style?: <span class="str">'solid'</span> | <span class="str">'dashed'</span> | <span class="str">'dotted'</span>,
+  arrowhead?: <span class="str">'arrow'</span> | <span class="str">'open'</span> | <span class="str">'none'</span>,
+{{ '}' }})</code></div>
+          </section>
+
+          <section id="sequence-api">
+            <h2>sequence() — builder reference</h2>
+            <p>Model actor-to-actor message flows. Actors auto-register from <code>.message()</code> calls — you can skip <code>.actor()</code> if you prefer.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }} sequence {{ '}' }} <span class="kw">from</span> <span class="str">'flowchart-sequence-designer'</span>;
+
+<span class="kw">const</span> diagram = sequence(<span class="str">'Auth Flow'</span>)
+  .actor(<span class="str">'User'</span>)
+  .actor(<span class="str">'Server'</span>)
+  .message(<span class="str">'User'</span>,   <span class="str">'Server'</span>, <span class="str">'POST /login'</span>)
+  .message(<span class="str">'Server'</span>, <span class="str">'User'</span>,   <span class="str">'200 OK + token'</span>, {{ '{' }} style: <span class="str">'dashed'</span> {{ '}' }});
+
+console.log(diagram.toMermaid());</code></div>
+          </section>
+
+          <section id="model-api">
+            <h2>Model — low-level API</h2>
+            <p>Work directly with the mutable graph model when you need fine-grained control — useful for incremental updates or building on top of the library.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }} Model {{ '}' }} <span class="kw">from</span> <span class="str">'flowchart-sequence-designer'</span>;
+<span class="kw">import type</span> {{ '{' }} DiagramModel {{ '}' }} <span class="kw">from</span> <span class="str">'flowchart-sequence-designer'</span>;
+
+<span class="kw">const</span> m = <span class="kw">new</span> Model({{ '{' }} type: <span class="str">'flowchart'</span>, nodes: [], edges: [] {{ '}' }});
+m.addNode({{ '{' }} id: <span class="str">'a'</span>, label: <span class="str">'Step A'</span>, shape: <span class="str">'rectangle'</span> {{ '}' }});
+m.addNode({{ '{' }} id: <span class="str">'b'</span>, label: <span class="str">'Step B'</span>, shape: <span class="str">'rectangle'</span> {{ '}' }});
+m.addEdge({{ '{' }} id: <span class="str">'e1'</span>, from: <span class="str">'a'</span>, to: <span class="str">'b'</span>, label: <span class="str">'next'</span> {{ '}' }});
+
+console.log(m.toMermaid());</code></div>
+          </section>
+
+          <!-- Import -->
+          <section id="import">
+            <h2>Import</h2>
+            <p>Parse existing Mermaid or JSON into a live model. Round-trip fidelity is guaranteed: <code>fromMermaid(diagram.toMermaid())</code> produces an equivalent model. The editor's Import button opens a modal with paste + file upload that calls these under the hood.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }} fromMermaid, fromJSON {{ '}' }} <span class="kw">from</span> <span class="str">'flowchart-sequence-designer'</span>;
+
+<span class="kw">const</span> model = fromMermaid(<span class="str">'graph TD; A--&gt;B; B--&gt;C'</span>);
+<span class="kw">const</span> model2 = fromJSON(jsonString);</code></div>
+            <p>Feed imported models directly into the Angular component:</p>
+            <div class="code-block"><code>&lt;fsd-diagram [initialModel]="importedModel" /&gt;</code></div>
+          </section>
+
+          <!-- Export formats -->
+          <section id="export">
+            <h2>Export formats</h2>
+            <p>Every builder exposes the same export methods. <code>toPNG()</code> is browser-only (uses the Canvas API).</p>
+            <div class="code-block"><code>diagram.toMermaid()   <span class="kw">// → string</span>
+diagram.toPlantUML()  <span class="kw">// → string</span>
+diagram.toJSON()      <span class="kw">// → string (serialised DiagramModel)</span>
+diagram.toSVG()       <span class="kw">// → string (SVG markup)</span>
+diagram.toPNG()       <span class="kw">// → Promise&lt;Blob&gt; (browser only)</span></code></div>
+
+            <h3>Round-trip rules</h3>
+            <p>The five formats trade fidelity for portability. Use this table to pick the one that matches what you need.</p>
             <table class="props-table">
-              <tr><th>Output</th><th>Type</th><th>Description</th></tr>
-              <tr><td><code>(modelChange)</code></td><td>DiagramModel</td><td>Emitted on every edit</td></tr>
-              <tr><td><code>(exportEvent)</code></td><td>{{ '{' }} format, content {{ '}' }}</td><td>Emitted on export action</td></tr>
+              <tr><th>Format</th><th>Round-trip</th><th>Preserved</th><th>Dropped</th></tr>
+              <tr><td><code>JSON</code></td><td>✅ full</td><td>every field — variant, metadata, waypoint, x/y, arrowheads, message order</td><td>nothing</td></tr>
+              <tr><td><code>Mermaid (flowchart)</code></td><td>partial</td><td>shapes, labels, connectors, edge labels, subgraph → metadata.group</td><td>positions, waypoint, metadata.answers, variant. Dotted collapses to dashed.</td></tr>
+              <tr><td><code>Mermaid (sequence)</code></td><td>partial</td><td>actor order, message arrows, labels</td><td>message metadata, styling overrides</td></tr>
+              <tr><td><code>PlantUML (flowchart)</code></td><td>export-only</td><td>edge styles, labels, node ids</td><td>shape distinctions, positions, metadata, variant</td></tr>
+              <tr><td><code>PlantUML (sequence)</code></td><td>export-only</td><td>actor order, message style, labels</td><td>—</td></tr>
+              <tr><td><code>SVG</code></td><td>export-only (rendered)</td><td>full visual parity with the canvas</td><td>—</td></tr>
+              <tr><td><code>PNG</code></td><td>export-only (browser-only)</td><td>same as SVG, rasterized at devicePixelRatio</td><td>—</td></tr>
+            </table>
+            <p>If you need 100% fidelity, use JSON. If you need a format GitHub renders inline in markdown, use Mermaid. If you need a polished image for docs, use SVG or PNG.</p>
+          </section>
+
+          <!-- Presets -->
+          <section id="presets">
+            <h2>Presets &amp; empty models</h2>
+            <p>The editor mounts with a real working diagram so consumers immediately see styled nodes and edges. Reach for <code>emptyModel(type)</code> to start blank, or call a <code>preset*Model()</code> helper from your own code to hydrate the same example data.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }}
+  presetFlowchartModel,
+  presetSequenceModel,
+  emptyModel,
+{{ '}' }} <span class="kw">from</span> <span class="str">'&#64;flowchart-sequence-designer/angular'</span>;
+
+presetFlowchartModel(<span class="str">'flowchart'</span>)  <span class="kw">// 6-node order flow with one decision</span>
+presetFlowchartModel(<span class="str">'question'</span>)   <span class="kw">// 1-question / 3-answer router</span>
+presetFlowchartModel(<span class="str">'journey'</span>)    <span class="kw">// 5-step onboarding sequence</span>
+presetSequenceModel()              <span class="kw">// 3-actor login handshake</span>
+
+emptyModel(<span class="str">'flowchart'</span>)            <span class="kw">// blank flowchart</span>
+emptyModel(<span class="str">'flowchart'</span>, <span class="str">'journey'</span>) <span class="kw">// blank journey-variant flowchart</span>
+emptyModel(<span class="str">'sequence'</span>)             <span class="kw">// blank sequence diagram</span></code></div>
+            <p>All presets return a deep clone — mutate the result freely without affecting future calls.</p>
+          </section>
+
+          <!-- Angular UI component -->
+          <section id="angular-ui">
+            <h2>Angular UI component</h2>
+            <p>Import from <code>&#64;flowchart-sequence-designer/angular</code>. The component is a self-contained SVG canvas — no additional CSS import needed.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }} FsdDiagramComponent {{ '}' }} <span class="kw">from</span> <span class="str">'&#64;flowchart-sequence-designer/angular'</span>;
+
+<span class="kw">// Drop it anywhere — works with zero config</span>
+&lt;fsd-diagram /&gt;
+
+<span class="kw">// Pre-load a model and listen for changes</span>
+&lt;fsd-diagram
+  [initialModel]="model"
+  (modelChange)="onModelChange($event)"
+/&gt;
+
+<span class="kw">// Full control</span>
+&lt;fsd-diagram
+  [initialModel]="model"
+  (modelChange)="save($event)"
+  (exportEvent)="handleExport($event)"
+  [height]="'100%'"
+  [variant]="'question'"
+  [theme]="'dark'"
+  [allowedExports]="['json', 'svg']"
+  [allowImport]="false"
+/&gt;</code></div>
+
+            <h3>Variants</h3>
+            <table class="props-table">
+              <tr><th>Variant</th><th>Description</th></tr>
+              <tr><td><code>flowchart</code></td><td>General purpose — any shapes, freeform connections</td></tr>
+              <tr><td><code>question</code></td><td>Each node is a question with lettered answer cards, each with its own connection port</td></tr>
+              <tr><td><code>journey</code></td><td>Numbered milestone steps — user path or process walkthrough</td></tr>
             </table>
           </section>
 
-          <section id="fsd-sequence">
-            <h2>&lt;fsd-sequence&gt;</h2>
-            <p>Sequence diagram editor with actor lifelines and ordered messages.</p>
+          <!-- Editor features -->
+          <section id="editor-features">
+            <h2>Editor features</h2>
+
+            <h3>Canvas</h3>
+            <p>Drag nodes to reposition (snaps to 24px grid). Scroll to zoom in/out (pinch to zoom on touch). Drag the canvas background to pan. Double-click a node to rename it inline. Dashed alignment guides appear when a dragged node lines up with a sibling. Bottom-right minimap for quick viewport navigation.</p>
+
+            <h3>Connecting nodes</h3>
+            <p>Hover a node to reveal the bottom port dot, then drag it to another node. In the Question variant, each answer row has its own port dot — drag it to route that answer to a specific node.</p>
+
+            <h3>Node Navigator (left panel)</h3>
+            <p>Lists all nodes with shape badge, label, and connection counts. Search/filter by name. Click any row to jump to that node and center the canvas on it. Collapses to a slim icon strip.</p>
+
+            <h3>Step Editor (right panel)</h3>
+            <p>Appears when a node is selected. Edit the node name, change its shape. Manage branches / answer options (add, remove, reorder). Question variant shows connection status per answer.</p>
+
+            <h3>Context menu (right-click)</h3>
             <table class="props-table">
-              <tr><th>Input</th><th>Type</th><th>Description</th></tr>
-              <tr><td><code>[initialModel]</code></td><td>DiagramModel</td><td>Initial sequence data</td></tr>
-              <tr><td><code>[height]</code></td><td>string | number</td><td>Editor height</td></tr>
-              <tr><td><code>[theme]</code></td><td>'light' | 'dark' | 'auto'</td><td>Color theme</td></tr>
-              <tr><td><code>[allowImport]</code></td><td>boolean</td><td>Show import button</td></tr>
-              <tr><td><code>[themeOverrides]</code></td><td>Partial&lt;SequenceThemeColors&gt;</td><td>Custom color overrides</td></tr>
-            </table>
-            <table class="props-table">
-              <tr><th>Output</th><th>Type</th><th>Description</th></tr>
-              <tr><td><code>(modelChange)</code></td><td>DiagramModel</td><td>Emitted on every edit</td></tr>
-              <tr><td><code>(exportEvent)</code></td><td>{{ '{' }} format, content {{ '}' }}</td><td>Emitted on export action</td></tr>
+              <tr><th>Target</th><th>Actions</th></tr>
+              <tr><td>Canvas</td><td>Add node at cursor, Re-center, Undo, Redo</td></tr>
+              <tr><td>Node</td><td>Rename, Duplicate, Disconnect all edges, Delete</td></tr>
+              <tr><td>Edge</td><td>Style (solid/dashed/dotted), Arrowhead, Reset routing, Delete</td></tr>
+              <tr><td>Touch</td><td>Long-press (~550ms) opens the canvas menu</td></tr>
             </table>
           </section>
 
           <!-- Theming -->
           <section id="theming">
             <h2>Theming</h2>
-            <div class="code-block"><code>&lt;fsd-diagram
-  [theme]="'dark'"
-  [themeOverrides]="{{ '{' }} canvasBg: '#1a1a2e', nodeBg: '#2d2d44' {{ '}' }}"
-/&gt;</code></div>
+            <p>The editor ships with a slate-based light/dark palette and follows the OS preference by default. To brand-match without forking, pass <code>[themeOverrides]</code> — a <code>Partial&lt;ThemeColors&gt;</code> shallow-merged on top of the resolved palette.</p>
+            <div class="code-block"><code><span class="kw">import</span> {{ '{' }} FsdDiagramComponent {{ '}' }} <span class="kw">from</span> <span class="str">'&#64;flowchart-sequence-designer/angular'</span>;
+<span class="kw">import type</span> {{ '{' }} ThemeColors {{ '}' }} <span class="kw">from</span> <span class="str">'&#64;flowchart-sequence-designer/angular'</span>;
+
+<span class="kw">// In component class:</span>
+brand: Partial&lt;ThemeColors&gt; = {{ '{' }}
+  canvas: <span class="str">'#0b1020'</span>,
+  nodeFill: <span class="str">'#111a2e'</span>,
+  nodeStroke: <span class="str">'#2b3a5a'</span>,
+  nodeSelectedFill: <span class="str">'#1a2447'</span>,
+  edgeColor: <span class="str">'#7b8aa6'</span>,
+  textPrimary: <span class="str">'#e6edf7'</span>,
+{{ '}' }};
+
+<span class="kw">// In template:</span>
+&lt;fsd-diagram [theme]="<span class="str">'dark'</span>" [themeOverrides]="brand" /&gt;</code></div>
+
+            <h3>ThemeColors tokens (flowchart)</h3>
+            <table class="props-table">
+              <tr><th>Token group</th><th>Members</th><th>Where it shows up</th></tr>
+              <tr><td>Canvas</td><td><code>canvas</code>, <code>dot</code></td><td>Background + dot grid</td></tr>
+              <tr><td>Nodes</td><td><code>nodeFill</code>, <code>nodeStroke</code>, <code>nodeSelectedFill</code></td><td>Node body, border, selection tint</td></tr>
+              <tr><td>Edges</td><td><code>edgeColor</code></td><td>Edge stroke + arrowhead</td></tr>
+              <tr><td>Type ramp</td><td><code>textPrimary</code>, <code>textSecondary</code>, <code>textMuted</code></td><td>Labels, hints, secondary text</td></tr>
+              <tr><td>Chrome — panel</td><td><code>panelBg</code>, <code>panelBorder</code></td><td>Side panel surface</td></tr>
+              <tr><td>Chrome — controls</td><td><code>ctrlsBg</code>, <code>ctrlsBorder</code></td><td>Toolbar, zoom controls</td></tr>
+              <tr><td>Chrome — input</td><td><code>inputBg</code>, <code>inputBorder</code>, <code>inputText</code></td><td>Form fields in the side panel</td></tr>
+              <tr><td>Chrome — card</td><td><code>cardBg</code>, <code>cardBorder</code></td><td>Answer rows, branch rows</td></tr>
+              <tr><td>Chrome — section</td><td><code>sectionBorder</code></td><td>Divider between panel sections</td></tr>
+              <tr><td>Buttons</td><td><code>btnSecBg</code>, <code>btnSecText</code>, <code>shapeBtnBg</code>, <code>shapeBtnBorder</code></td><td>Secondary buttons, shape picker</td></tr>
+              <tr><td>Accents</td><td><code>addFormBg</code>, <code>bannerBg</code>, <code>labelText</code>, <code>hintText</code>, <code>statusBg</code></td><td>Add-form backdrop, validation banner</td></tr>
+            </table>
+
+            <h3>SequenceThemeColors tokens (sequence)</h3>
+            <p>The sequence editor accepts the same prop with a slightly different shape: <code>Partial&lt;SequenceThemeColors&gt;</code>. It drops node-specific tokens and adds <code>lifeline</code>, <code>arrow</code>, and <code>actorFill</code> / <code>actorStroke</code> / <code>actorText</code> for the swim-lane elements.</p>
+          </section>
+
+          <!-- Accessibility & touch -->
+          <section id="a11y">
+            <h2>Accessibility &amp; touch</h2>
+            <p>The editor is keyboard-first and screen-reader-aware. Every interaction reachable by mouse has a keyboard equivalent; every state change announces via a polite <code>aria-live</code> region.</p>
+
+            <h3>Keyboard navigation</h3>
+            <p>Every node, port, and toolbar control is reachable with Tab; selection moves with Arrow keys (1 grid unit, or 4 with Shift); Alt+Arrow traverses the graph to the nearest connected neighbor in that direction. The focus ring is visible at all times.</p>
+
+            <h3>ARIA roles</h3>
+            <p>The canvas is an <code>application</code> region with an <code>aria-label</code>; selection, add, and delete actions update an <code>aria-live="polite"</code> status region. The toolbar uses native button elements with explicit labels.</p>
+
+            <h3>Reduced motion</h3>
+            <p>The animated edge-flow dash honours <code>prefers-reduced-motion</code> — when set, the dash freezes and the canvas renders with no animation.</p>
+
+            <h3>Touch interactions</h3>
+            <table class="props-table">
+              <tr><th>Action</th><th>Gesture</th></tr>
+              <tr><td>Pan</td><td>One-finger drag on the canvas background</td></tr>
+              <tr><td>Zoom</td><td>Two-finger pinch</td></tr>
+              <tr><td>Context menu</td><td>Long-press (~550 ms) on the canvas or on a node</td></tr>
+              <tr><td>Larger hit targets</td><td>Port circles auto-enlarge on coarse-pointer devices (24 px vs. 14 px)</td></tr>
+              <tr><td>Drag node</td><td>Press and drag the node body. 8 px threshold lets you tap to select.</td></tr>
+            </table>
+          </section>
+
+          <!-- Keyboard shortcuts -->
+          <section id="shortcuts">
+            <h2>Keyboard shortcuts</h2>
+            <p>Every editor shortcut is keyboard-only — the same actions are also reachable via right-click menus and toolbar buttons.</p>
+            <table class="props-table">
+              <tr><th>Shortcut</th><th>Action</th></tr>
+              <tr><td><code>Ctrl+Z</code></td><td>Undo</td></tr>
+              <tr><td><code>Ctrl+Y</code> / <code>Ctrl+Shift+Z</code></td><td>Redo</td></tr>
+              <tr><td><code>Ctrl+0</code></td><td>Fit all nodes in view</td></tr>
+              <tr><td><code>Ctrl+C</code> / <code>Ctrl+V</code></td><td>Copy / paste selection (internal edges preserved, +24 px offset)</td></tr>
+              <tr><td><code>Ctrl+D</code></td><td>Duplicate selection</td></tr>
+              <tr><td><code>Delete</code> / <code>Backspace</code></td><td>Remove selection</td></tr>
+              <tr><td><code>Escape</code></td><td>Deselect, cancel edge drag, close context menu</td></tr>
+              <tr><td><code>Arrow keys</code></td><td>Nudge selection 1 grid unit (Shift = 4 units)</td></tr>
+              <tr><td><code>Alt+Arrow</code></td><td>Traverse to nearest node in that direction</td></tr>
+              <tr><td><code>Shift+click</code></td><td>Toggle a node in/out of selection</td></tr>
+              <tr><td><code>Shift+drag</code> (canvas)</td><td>Box-select — adds intersected nodes to selection</td></tr>
+              <tr><td>Double-click edge label</td><td>Rename edge label inline</td></tr>
+              <tr><td>Drag edge midpoint</td><td>Route edge through a waypoint</td></tr>
+            </table>
+          </section>
+
+          <!-- Component props -->
+          <section id="inputs">
+            <h2>Component props</h2>
+            <h3>&lt;fsd-diagram&gt; Inputs</h3>
+            <table class="props-table">
+              <tr><th>Input</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              <tr><td><code>[initialModel]</code></td><td>DiagramModel</td><td>preset</td><td>Pre-load a diagram model into the editor</td></tr>
+              <tr><td><code>[height]</code></td><td>string | number</td><td>'500px'</td><td>Any CSS height value</td></tr>
+              <tr><td><code>[variant]</code></td><td>DiagramVariant</td><td>'flowchart'</td><td>'flowchart' | 'question' | 'journey'</td></tr>
+              <tr><td><code>[theme]</code></td><td>string</td><td>'light'</td><td>'light' | 'dark' | 'auto' (follows system)</td></tr>
+              <tr><td><code>[themeOverrides]</code></td><td>Partial&lt;ThemeColors&gt;</td><td>—</td><td>Brand-match the editor by overriding palette entries</td></tr>
+              <tr><td><code>[allowedExports]</code></td><td>ExportFormat[]</td><td>all</td><td>Restrict visible export buttons</td></tr>
+              <tr><td><code>[allowImport]</code></td><td>boolean</td><td>false</td><td>Show/hide the Import button</td></tr>
+            </table>
+            <h3>&lt;fsd-diagram&gt; Outputs</h3>
+            <table class="props-table">
+              <tr><th>Output</th><th>Type</th><th>Description</th></tr>
+              <tr><td><code>(modelChange)</code></td><td>DiagramModel</td><td>Fires on every node/edge mutation</td></tr>
+              <tr><td><code>(exportEvent)</code></td><td>{{ '{' }} format: ExportFormat, content: string | Blob {{ '}' }}</td><td>Intercept exports instead of auto-downloading</td></tr>
+            </table>
+
+            <h3>&lt;fsd-sequence&gt; Inputs</h3>
+            <p>Same as <code>&lt;fsd-diagram&gt;</code> except no <code>[variant]</code> input. Uses <code>Partial&lt;SequenceThemeColors&gt;</code> for themeOverrides.</p>
           </section>
 
           <!-- Types -->
@@ -176,11 +461,64 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
             <div class="code-block"><code><span class="kw">import type</span> {{ '{' }}
   DiagramModel,
   DiagramNode,
-  DiagramConnection,
-  ExportFormat,
+  DiagramEdge,
+  DiagramVariant,   <span class="kw">// 'flowchart' | 'question' | 'journey'</span>
+  DiagramType,      <span class="kw">// 'flowchart' | 'sequence'</span>
+  NodeShape,        <span class="kw">// 'rectangle' | 'diamond' | 'circle' | 'parallelogram'</span>
+  ExportFormat,     <span class="kw">// 'mermaid' | 'plantuml' | 'json' | 'svg' | 'png'</span>
+  SequenceMessage,
   ThemeColors,
   SequenceThemeColors,
 {{ '}' }} <span class="kw">from</span> <span class="str">'&#64;flowchart-sequence-designer/angular'</span>;</code></div>
+
+            <h3>DiagramModel</h3>
+            <div class="code-block"><code><span class="kw">interface</span> DiagramModel {{ '{' }}
+  type: <span class="str">'flowchart'</span> | <span class="str">'sequence'</span>;
+  variant?: DiagramVariant;
+  title?: <span class="kw">string</span>;
+  nodes: DiagramNode[];
+  edges: DiagramEdge[];
+  actors?: <span class="kw">string</span>[];           <span class="kw">// sequence only</span>
+  messages?: SequenceMessage[]; <span class="kw">// sequence only</span>
+{{ '}' }}</code></div>
+
+            <h3>DiagramNode</h3>
+            <div class="code-block"><code><span class="kw">interface</span> DiagramNode {{ '{' }}
+  id: <span class="kw">string</span>;
+  label: <span class="kw">string</span>;
+  shape?: NodeShape;
+  x?: <span class="kw">number</span>;
+  y?: <span class="kw">number</span>;
+  metadata?: Record&lt;<span class="kw">string</span>, unknown&gt;;
+  <span class="kw">// question variant: metadata.answers = string[]</span>
+{{ '}' }}</code></div>
+
+            <h3>DiagramEdge</h3>
+            <div class="code-block"><code><span class="kw">interface</span> DiagramEdge {{ '{' }}
+  id: <span class="kw">string</span>;
+  from: <span class="kw">string</span>;
+  to: <span class="kw">string</span>;
+  label?: <span class="kw">string</span>;
+  style?: <span class="str">'solid'</span> | <span class="str">'dashed'</span> | <span class="str">'dotted'</span>;
+  arrowhead?: <span class="str">'arrow'</span> | <span class="str">'none'</span> | <span class="str">'open'</span>;
+  waypoint?: {{ '{' }} x: <span class="kw">number</span>; y: <span class="kw">number</span> {{ '}' }};
+{{ '}' }}</code></div>
+
+            <h3>SequenceMessage</h3>
+            <div class="code-block"><code><span class="kw">interface</span> SequenceMessage {{ '{' }}
+  id: <span class="kw">string</span>;
+  from: <span class="kw">string</span>;
+  to: <span class="kw">string</span>;
+  label: <span class="kw">string</span>;
+  style?: <span class="str">'solid'</span> | <span class="str">'dashed'</span>;
+{{ '}' }}</code></div>
+
+            <h3>ValidationError</h3>
+            <div class="code-block"><code><span class="kw">interface</span> ValidationError {{ '{' }}
+  kind: <span class="str">'dangling-from'</span> | <span class="str">'dangling-to'</span> | <span class="str">'duplicate-node-id'</span> | <span class="str">'duplicate-edge-id'</span>;
+  id: <span class="kw">string</span>;
+  message: <span class="kw">string</span>;
+{{ '}' }}</code></div>
           </section>
         </div>
       </main>
