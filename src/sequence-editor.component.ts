@@ -13,7 +13,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import type { DiagramModel, ExportFormat } from "flowchart-sequence-designer";
 import type { SequenceEditorProps, SequenceThemeColors } from "flowchart-sequence-designer/ui";
 import { ReactBridge } from "./react-bridge";
@@ -21,11 +20,14 @@ import { ReactBridge } from "./react-bridge";
 @Component({
   selector: "fsd-sequence",
   standalone: true,
-  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <span *ngIf="loading" class="fsd-loading">Loading editor…</span>
-    <span *ngIf="error" class="fsd-error">{{ error }}</span>
+    @if (loading) {
+      <span class="fsd-loading">Loading editor…</span>
+    }
+    @if (error) {
+      <span class="fsd-error">{{ error }}</span>
+    }
     <div #container [style.height.px]="normalizedHeight" [style.display]="loading || error ? 'none' : 'block'" style="width:100%"></div>
   `,
   styles: [`
