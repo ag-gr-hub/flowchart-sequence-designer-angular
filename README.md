@@ -527,6 +527,7 @@ security seriously:
 |-----------|---------|------|
 | React | [`flowchart-sequence-designer`](https://www.npmjs.com/package/flowchart-sequence-designer) | [Docs & Demo](https://ag-gr-hub.github.io/flowchart-sequence-designer/) |
 | Angular | [`@flowchart-sequence-designer/angular`](https://www.npmjs.com/package/@flowchart-sequence-designer/angular) | [Docs & Demo](https://ag-gr-hub.github.io/flowchart-sequence-designer-angular/) |
+| Vue | [`@flowchart-sequence-designer/vue`](https://www.npmjs.com/package/@flowchart-sequence-designer/vue) | [Docs & Demo](https://ag-gr-hub.github.io/flowchart-sequence-designer-vue/) |
 
 ---
 

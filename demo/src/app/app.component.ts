@@ -97,6 +97,10 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l1.63 14.27L12 22l8.37-3.73L22 7L12 2zm0 2.21l6.9 3.33-.98 8.56L12 19.77l-5.92-3.67-.98-8.56L12 4.21z"/></svg>
                 Angular (current)
               </a>
+              <a href="https://ag-gr-hub.github.io/flowchart-sequence-designer-vue/" class="fw-pill">
+                <svg width="14" height="14" viewBox="0 0 32 32" fill="none"><path d="M2 4l14 24L30 4h-5.5L16 18.5 7.5 4H2z" fill="#42b883"/><path d="M7.5 4L16 18.5 24.5 4h-5L16 11 12.5 4h-5z" fill="#35495e"/></svg>
+                Vue
+              </a>
             </div>
           </div>
 
