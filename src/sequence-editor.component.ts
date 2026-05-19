@@ -28,10 +28,10 @@ import { ReactBridge } from "./react-bridge";
     @if (error) {
       <span class="fsd-error">{{ error }}</span>
     }
-    <div #container [style.height.px]="normalizedHeight" [style.display]="loading || error ? 'none' : 'block'" style="width:100%"></div>
+    <div #container [style.height]="normalizedHeight" [style.display]="loading || error ? 'none' : 'block'" style="width:100%"></div>
   `,
   styles: [`
-    :host { display: block; }
+    :host { display: block; height: 100%; }
     .fsd-loading { color: #888; font-size: 14px; padding: 16px; display: inline-block; }
     .fsd-error { color: #c00; font-size: 14px; padding: 16px; display: inline-block; }
   `],
@@ -56,10 +56,13 @@ export class FsdSequenceComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private zone: NgZone, private cdr: ChangeDetectorRef) {}
 
-  get normalizedHeight(): number {
-    if (typeof this.height === 'number') return this.height;
-    if (typeof this.height === 'string') return parseInt(this.height, 10) || 500;
-    return 500;
+  get normalizedHeight(): string {
+    if (typeof this.height === 'number') return `${this.height}px`;
+    if (typeof this.height === 'string') {
+      if (/^\d+$/.test(this.height)) return `${this.height}px`;
+      return this.height;
+    }
+    return '500px';
   }
 
   ngOnInit(): void {
