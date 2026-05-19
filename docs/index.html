@@ -437,19 +437,6 @@ export class CustomLayoutComponent {
     </div>
     <iframe class="demo-frame" src="./demo/" title="Angular Wrapper Demo" loading="lazy"></iframe>
 
-    <!-- Setup -->
-    <h2>CI/CD Setup</h2>
-    <div class="card">
-      <h3>Auto-publish to npm on Git Tags</h3>
-      <p>This package auto-publishes to npm when you push a <code>v*</code> tag. Setup steps:</p>
-      <ol style="padding-left: 1.5rem; margin-top: 0.5rem;">
-        <li>Go to <a href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular/settings/secrets/actions">Repository Settings → Secrets → Actions</a></li>
-        <li>Click <strong>New repository secret</strong></li>
-        <li>Name: <code>NPM_TOKEN</code></li>
-        <li>Value: Your npm access token (generate at <a href="https://www.npmjs.com/settings/~/tokens">npmjs.com/settings/tokens</a>)</li>
-        <li>To publish: <code>npm version patch && git push origin main --tags</code></li>
-      </ol>
-    </div>
   </div>
 
   <footer>
