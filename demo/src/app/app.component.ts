@@ -11,6 +11,7 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
 @Component({
   selector: 'app-root',
   standalone: true,
+  preserveWhitespaces: true,
   imports: [JsonPipe, FsdDiagramComponent, FsdSequenceComponent],
   template: `
     <!-- Single top nav (mirrors React layout) -->
