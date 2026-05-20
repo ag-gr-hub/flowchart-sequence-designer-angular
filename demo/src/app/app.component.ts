@@ -15,29 +15,29 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
   imports: [JsonPipe, FsdDiagramComponent, FsdSequenceComponent],
   template: `
     <!-- Single top nav (mirrors React layout) -->
-    <nav class="topnav">
-      <a class="brand" href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular" target="_blank">
+    <nav class="topnav" role="tablist" aria-label="Editor variants">
+      <a class="brand" href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular" target="_blank" rel="noopener noreferrer">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="#dd0031"><path d="M12 2L2 7l1.63 14.27L12 22l8.37-3.73L22 7L12 2zm0 2.21l6.9 3.33-.98 8.56L12 19.77l-5.92-3.67-.98-8.56L12 4.21z"/></svg>
         &#64;flowchart-sequence-designer/angular
       </a>
 
-      <button [class.active]="tab === 'flowchart'" (click)="switchTab('flowchart')">
+      <button type="button" role="tab" [attr.aria-selected]="tab === 'flowchart'" [class.active]="tab === 'flowchart'" (click)="switchTab('flowchart')">
         <span class="tab-label">Flowchart</span>
         <span class="tab-desc">General purpose — any shapes, any flow</span>
       </button>
-      <button [class.active]="tab === 'question'" (click)="switchTab('question')">
+      <button type="button" role="tab" [attr.aria-selected]="tab === 'question'" [class.active]="tab === 'question'" (click)="switchTab('question')">
         <span class="tab-label">Question Flow</span>
         <span class="tab-desc">Each node is a question; answers are side-by-side</span>
       </button>
-      <button [class.active]="tab === 'journey'" (click)="switchTab('journey')">
+      <button type="button" role="tab" [attr.aria-selected]="tab === 'journey'" [class.active]="tab === 'journey'" (click)="switchTab('journey')">
         <span class="tab-label">Journey Map</span>
         <span class="tab-desc">Numbered milestone steps</span>
       </button>
-      <button [class.active]="tab === 'sequence'" (click)="switchTab('sequence')">
+      <button type="button" role="tab" [attr.aria-selected]="tab === 'sequence'" [class.active]="tab === 'sequence'" (click)="switchTab('sequence')">
         <span class="tab-label">Sequence</span>
         <span class="tab-desc">Actor lifelines + ordered messages</span>
       </button>
-      <button class="docs-tab" [class.active]="tab === 'docs'" (click)="tab = 'docs'">
+      <button type="button" role="tab" [attr.aria-selected]="tab === 'docs'" class="docs-tab" [class.active]="tab === 'docs'" (click)="tab = 'docs'">
         <span class="tab-label">For Developers</span>
         <span class="tab-desc">API &amp; programmatic usage</span>
       </button>
@@ -45,7 +45,7 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
       <div class="nav-spacer"></div>
       <div class="theme-toggle">
         @for (t of themes; track t) {
-          <button [class.active]="theme === t" (click)="theme = t">
+          <button type="button" [class.active]="theme === t" (click)="theme = t">
             {{ t === 'light' ? '☀ Light' : t === 'dark' ? '☾ Dark' : '⊙ Auto' }}
           </button>
         }
@@ -55,7 +55,7 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
     <!-- Content -->
     @if (tab === 'docs') {
       <main class="docs-page">
-        <div class="docs-sidebar">
+        <nav class="docs-sidebar" aria-label="Documentation">
           <div class="sidebar-heading">Documentation</div>
           <a href="#install">Install</a>
           <a href="#quick-start">Quick Start</a>
@@ -80,10 +80,10 @@ import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/an
           <a href="#inputs">Component props</a>
           <a href="#types">TypeScript Types</a>
           <div class="sidebar-divider"></div>
-          <a href="https://ag-gr-hub.github.io/flowchart-sequence-designer/" target="_blank">↗ React Version</a>
-          <a href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular" target="_blank">↗ GitHub</a>
-          <a href="https://www.npmjs.com/package/@flowchart-sequence-designer/angular" target="_blank">↗ npm</a>
-        </div>
+          <a href="https://ag-gr-hub.github.io/flowchart-sequence-designer/" target="_blank" rel="noopener noreferrer">↗ React Version</a>
+          <a href="https://github.com/ag-gr-hub/flowchart-sequence-designer-angular" target="_blank" rel="noopener noreferrer">↗ GitHub</a>
+          <a href="https://www.npmjs.com/package/@flowchart-sequence-designer/angular" target="_blank" rel="noopener noreferrer">↗ npm</a>
+        </nav>
         <div class="docs-content">
           <!-- Supported Frameworks -->
           <div class="frameworks-box">
@@ -805,6 +805,39 @@ brand: Partial&lt;ThemeColors&gt; = {{ '{' }}
       padding: 2px 6px;
       border-radius: 4px;
       font-size: 12px;
+    }
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid #dd0031;
+      outline-offset: 2px;
+    }
+    @media (max-width: 768px) {
+      .topnav {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        overflow-y: visible;
+      }
+      .topnav .brand {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+        padding: 8px 16px;
+        margin-right: 0;
+      }
+      .tab-btn .tab-desc {
+        display: none;
+      }
+      .docs-sidebar {
+        display: none;
+      }
+      .docs-content {
+        padding: 20px 16px 60px;
+      }
+    }
+    @media (max-width: 480px) {
+      .tab-btn {
+        padding: 8px 10px;
+        font-size: 11px;
+      }
     }
   `],
 })
