@@ -16,7 +16,7 @@
     "@angular/platform-browser": "^21.2.13",
     "@angular/platform-browser-dynamic": "^21.2.13",
     "@angular/router": "^21.2.13",
-    "flowchart-sequence-designer": "^1.2.3",
+    "flowchart-sequence-designer": "^1.2.4",
     "react": "^19",
     "react-dom": "^19",
     "rxjs": "^7.8.0",
@@ -27,8 +27,8 @@
     "@angular-devkit/build-angular": "^21.2.11",
     "@angular/cli": "^21.2.11",
     "@angular/compiler-cli": "^21.2.13",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
     "typescript": "~5.9.3"
   },
   "overrides": {
