@@ -552,10 +552,15 @@ brand: Partial&lt;ThemeColors&gt; = {{ '{' }}
       display: flex;
       flex-direction: column;
       height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       background: #0a0f1a;
       color: #e2e8f0;
       font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    :host > :last-child {
+      flex: 1;
+      min-height: 0;
     }
 
     /* ─── Single top nav bar (matches React) ─── */
@@ -849,7 +854,7 @@ export class AppComponent {
   tab: 'flowchart' | 'question' | 'journey' | 'sequence' | 'docs' = 'flowchart';
   themes: ('light' | 'dark' | 'auto')[] = ['light', 'auto', 'dark'];
   lastExport: { format: string; preview: string } | null = null;
-  editorHeight = 'calc(100vh - 52px)';
+  editorHeight = '100%';
 
   private currentFlowchart = this.flowchartModel;
   private currentSequence = this.sequenceModel;

@@ -1,27 +1,19 @@
 ---
-name: Feature request
-about: Suggest a new feature or enhancement
-title: '[Feature] '
+name: Feature Request
+about: Suggest an idea for this project
+title: "[Feature] "
 labels: enhancement
+assignees: ''
 ---
 
-## What's the use case
+**Is your feature request related to a problem?**
+A clear and concise description of the problem.
 
-<!-- What are you trying to accomplish? Describe the problem before the proposed solution. -->
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-## Proposed solution
+**Describe alternatives you've considered**
+Any alternative solutions or features you've considered.
 
-<!-- How would you like this to work? API sketch or rough idea. -->
-
-```typescript
-// e.g. a new component or input
-<fsd-diagram [readonly]="true" />
-```
-
-## Alternatives considered
-
-<!-- Other approaches you thought about and why you ruled them out. -->
-
-## Additional context
-
-<!-- Related issues, prior art, links to similar features in other tools. -->
+**Additional context**
+Any other relevant information or screenshots.
