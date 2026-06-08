@@ -51,7 +51,7 @@
     "@angular/compiler": "^21.2.13",
     "@angular/compiler-cli": "^21.2.13",
     "@angular/core": "^21.2.13",
-    "@angular/platform-browser": "^21.2.13",
+    "@angular/platform-browser": "^22.0.0",
     "@angular/platform-browser-dynamic": "^21.2.13",
     "@jest/globals": "^30.4.1",
     "@swc/core": "^1.15.33",
