@@ -47,12 +47,12 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@angular/common": "^21.2.13",
+    "@angular/common": "^22.0.1",
     "@angular/compiler": "^21.2.13",
     "@angular/compiler-cli": "^21.2.13",
-    "@angular/core": "^21.2.13",
-    "@angular/platform-browser": "^21.2.13",
-    "@angular/platform-browser-dynamic": "^21.2.13",
+    "@angular/core": "^22.0.1",
+    "@angular/platform-browser": "^22.0.1",
+    "@angular/platform-browser-dynamic": "^22.0.1",
     "@jest/globals": "^30.4.1",
     "@swc/core": "^1.15.33",
     "@swc/jest": "^0.2.39",
