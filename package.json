@@ -72,6 +72,10 @@
   "engines": {
     "node": ">=18"
   },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "@babel/core": "^7.29.7"
+  },
   "homepage": "https://ag-gr-hub.github.io/flowchart-sequence-designer-angular/",
   "bugs": {
     "url": "https://github.com/ag-gr-hub/flowchart-sequence-designer-angular/issues"
