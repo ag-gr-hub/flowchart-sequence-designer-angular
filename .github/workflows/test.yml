@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        # Angular 21 / ng-packagr require Node ^20.19 || ^22.12 — Node 18 cannot build.
+        node-version: [20, 22]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
@@ -18,6 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - run: npm ci
+      - run: npm run lint
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
