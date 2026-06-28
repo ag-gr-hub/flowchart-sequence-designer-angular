@@ -19,7 +19,7 @@
   "scripts": {
     "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json && node scripts/postbuild.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/ demo/src/ --ext .ts",
+    "lint": "eslint src demo/src",
     "test": "jest",
     "format": "prettier --write \"src/**/*.ts\" \"*.json\" \"*.md\"",
     "format:check": "prettier --check \"src/**/*.ts\" \"*.json\" \"*.md\"",
@@ -45,6 +45,9 @@
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.62.0",
+    "@typescript-eslint/parser": "^8.62.0",
+    "eslint": "^9.39.4",
     "flowchart-sequence-designer": "^1.2.4",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
