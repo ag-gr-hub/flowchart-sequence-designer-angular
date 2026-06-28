@@ -18,7 +18,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: npm publish --access public
+      # ng-packagr emits the publishable package (with generated package.json)
+      # into dist/, so publish from there rather than the project root.
+      - run: npm publish ./dist --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: GitHub Release
