@@ -14,12 +14,23 @@ editor inside Angular standalone components. The published package is the librar
 Library (root):
 
 ```bash
-npm run build        # tsup bundles esm+cjs, then tsc emits .d.ts (declarations come from tsc, NOT tsup)
+npm run build        # ng-packagr → dist/ (partial-Ivy FESM2022 + .d.ts), then scripts/postbuild.mjs
 npm run typecheck    # tsc --noEmit
 npm run lint         # eslint src/ demo/src/
 npm test             # jest
 npm run format       # prettier --write
 ```
+
+The library is built with **ng-packagr** (Angular's standard library packager), which
+runs the Angular compiler in `compilationMode: "partial"` and emits a FESM2022 bundle
+plus type declarations into `dist/`. This is what makes the package consumable by
+**AOT** Angular apps (the default `ng build`) — a plain esbuild/tsup transpile does *not*
+produce the partial-Ivy `ɵɵngDeclare*` output AOT requires, so don't reintroduce it.
+ng-packagr generates `dist/package.json` (correct `exports`/`module`/`peerDependencies`),
+so **the publishable package is `dist/`, not the project root**. The root `package.json`
+is marked `private` to prevent accidental root publishes; `scripts/postbuild.mjs` strips
+`private` and `overrides` from the generated `dist/package.json`. Publish with
+`npm publish ./dist` (the `publish.yml` workflow does this after `npm run build`).
 
 Run a single test: `npx jest src/react-bridge.spec.ts` or filter with `npx jest -t "name"`.
 
@@ -66,11 +77,13 @@ only one import.
 ## Dependencies & build boundaries
 
 - `flowchart-sequence-designer`, `flowchart-sequence-designer/ui`, `react`, `react-dom`,
-  `@angular/*`, and `rxjs` are **peer/external** — `tsup.config.ts` lists them in `external`
-  so they are never bundled. When adding an import that should not ship in the bundle, add it
-  to that list too.
-- The library compiles with Angular `compilationMode: "partial"` (Ivy partial-Ivy for
-  distribution); `strictTemplates` and strict injection are on.
+  and `@angular/*` are **peers** (declared in `peerDependencies`). ng-packagr treats every
+  peer dependency as external automatically, so they are never bundled into the FESM output.
+  When adding an import that should ship as a peer (not be bundled), add it to
+  `peerDependencies`; ng-packagr errors on imports that are neither peer nor dependency.
+- The library is built by **ng-packagr** with Angular `compilationMode: "partial"`
+  (`tsconfig.lib.json`); `strictTemplates` and strict injection are on. The partial-Ivy
+  output is what AOT consumers need — see the Commands section.
 
 ## Testing
 
