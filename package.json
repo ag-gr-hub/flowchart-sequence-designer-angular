@@ -3,6 +3,7 @@
   "version": "0.3.3",
   "description": "Angular wrapper for flowchart-sequence-designer — renders the React-based diagram editor inside Angular standalone components",
   "license": "MIT",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ag-gr-hub/flowchart-sequence-designer-angular.git"
@@ -15,23 +16,8 @@
     "svg"
   ],
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
-  "files": [
-    "dist",
-    "README.md",
-    "CHANGELOG.md"
-  ],
   "scripts": {
-    "build": "tsup && tsc --declaration --emitDeclarationOnly --outDir dist",
+    "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json && node scripts/postbuild.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/ demo/src/ --ext .ts",
     "test": "jest",
@@ -62,10 +48,10 @@
     "flowchart-sequence-designer": "^1.2.4",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
+    "ng-packagr": "^21.2.5",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "rxjs": "^7.8.0",
-    "tsup": "^8",
     "typescript": "~5.9.3",
     "zone.js": "^0.16.2"
   },
