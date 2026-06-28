@@ -1,7 +1,7 @@
 {
   "name": "@flowchart-sequence-designer/angular",
   "version": "0.3.3",
-  "description": "Angular wrapper for flowchart-sequence-designer \u2014 renders the React-based diagram editor inside Angular standalone components",
+  "description": "Angular wrapper for flowchart-sequence-designer — renders the React-based diagram editor inside Angular standalone components",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -47,12 +47,12 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@angular/common": "^21.2.13",
-    "@angular/compiler": "^21.2.13",
-    "@angular/compiler-cli": "^21.2.13",
-    "@angular/core": "^21.2.13",
-    "@angular/platform-browser": "^21.2.13",
-    "@angular/platform-browser-dynamic": "^21.2.13",
+    "@angular/common": "^21.2.17",
+    "@angular/compiler": "^21.2.17",
+    "@angular/compiler-cli": "^21.2.17",
+    "@angular/core": "^21.2.17",
+    "@angular/platform-browser": "^21.2.17",
+    "@angular/platform-browser-dynamic": "^21.2.17",
     "@jest/globals": "^30.4.1",
     "@swc/core": "^1.15.33",
     "@swc/jest": "^0.2.39",
@@ -71,6 +71,10 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1",
+    "@babel/core": "^7.29.7"
   },
   "homepage": "https://ag-gr-hub.github.io/flowchart-sequence-designer-angular/",
   "bugs": {
