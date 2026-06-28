@@ -3,12 +3,11 @@ import tsparser from '@typescript-eslint/parser';
 
 export default [
   {
-    files: ['src/**/*.ts'],
-    ignores: ['src/__mocks__/**'],
+    files: ['src/**/*.ts', 'demo/src/**/*.ts'],
+    ignores: ['src/__mocks__/**', '**/*.spec.ts'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {
-        project: './tsconfig.json',
         sourceType: 'module',
       },
     },
@@ -19,7 +18,7 @@ export default [
       ...tseslint.configs.recommended.rules,
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
 ];
