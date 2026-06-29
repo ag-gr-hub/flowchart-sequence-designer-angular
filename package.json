@@ -1,6 +1,6 @@
 {
   "name": "@flowchart-sequence-designer/angular",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Angular wrapper for flowchart-sequence-designer — renders the React-based diagram editor inside Angular standalone components",
   "license": "MIT",
   "private": true,
