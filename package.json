@@ -52,7 +52,7 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "ng-packagr": "^21.2.5",
-    "react": "^19.2.6",
+    "react": "^19.2.8",
     "react-dom": "^19.2.6",
     "rxjs": "^7.8.0",
     "typescript": "~5.9.3",
