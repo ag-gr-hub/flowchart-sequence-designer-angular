@@ -1,5 +1,25 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- **Build toolchain moved to Angular 22** (`@angular/*` `^22.2.3`, ng-packagr
+  `^22.2.4`, TypeScript `~6.0.3`) in both the library and the demo. The published
+  peer range (`@angular/core >=16`) is unchanged; output built with Angular 22 was
+  verified to AOT-link in an Angular 21 app.
+- **Requires Node `^22.22.3 || ^24.15.0 || >=26.0.0`** (matches Angular 22);
+  previously `^20.19.0 || ^22.12.0 || >=24.0.0`. CI now tests Node 22 and 24.
+- Dropped tsconfig options deprecated in TypeScript 6 (`baseUrl`,
+  `downlevelIteration`, `moduleResolution: node`).
+
+### Security
+
+- Clears the Angular `<21.2.20` advisories (sanitization bypass via host
+  bindings; `HttpTransferCache` information leak).
+- Regenerated the demo lockfile, removing vulnerable `hono`, `ip-address` and
+  `http-cache-semantics` from the dependency tree.
+
 ## [0.4.0] — 2026-06-29
 
 ### Fixed
