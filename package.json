@@ -33,12 +33,12 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@angular/common": "^21.2.19",
-    "@angular/compiler": "^21.2.19",
-    "@angular/compiler-cli": "^21.2.19",
-    "@angular/core": "^21.2.19",
-    "@angular/platform-browser": "^21.2.19",
-    "@angular/platform-browser-dynamic": "^21.2.19",
+    "@angular/common": "^22.2.3",
+    "@angular/compiler": "^22.2.3",
+    "@angular/compiler-cli": "^22.2.3",
+    "@angular/core": "^22.2.3",
+    "@angular/platform-browser": "^22.2.3",
+    "@angular/platform-browser-dynamic": "^22.2.3",
     "@jest/globals": "^30.5.1",
     "@swc/core": "^1.15.33",
     "@swc/jest": "^0.2.39",
@@ -51,15 +51,15 @@
     "flowchart-sequence-designer": "^1.2.4",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.1",
-    "ng-packagr": "^21.2.5",
+    "ng-packagr": "^22.2.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "rxjs": "^7.8.0",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "zone.js": "^0.16.2"
   },
   "engines": {
-    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },
   "overrides": {
     "esbuild": "^0.28.1",

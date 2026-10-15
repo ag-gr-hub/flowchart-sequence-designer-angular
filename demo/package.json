@@ -9,13 +9,13 @@
     "watch": "ng build --watch --configuration development"
   },
   "dependencies": {
-    "@angular/animations": "^21.2.19",
-    "@angular/common": "^21.2.19",
-    "@angular/compiler": "^21.2.19",
-    "@angular/core": "^21.2.19",
-    "@angular/platform-browser": "^21.2.19",
-    "@angular/platform-browser-dynamic": "^21.2.19",
-    "@angular/router": "^21.2.19",
+    "@angular/animations": "^22.2.3",
+    "@angular/common": "^22.2.3",
+    "@angular/compiler": "^22.2.3",
+    "@angular/core": "^22.2.3",
+    "@angular/platform-browser": "^22.2.3",
+    "@angular/platform-browser-dynamic": "^22.2.3",
+    "@angular/router": "^22.2.3",
     "flowchart-sequence-designer": "^1.2.4",
     "react": "^19",
     "react-dom": "^19",
@@ -24,12 +24,12 @@
     "zone.js": "^0.16.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^21.2.15",
-    "@angular/cli": "^21.2.15",
-    "@angular/compiler-cli": "^21.2.19",
+    "@angular-devkit/build-angular": "^22.2.2",
+    "@angular/cli": "^22.2.2",
+    "@angular/compiler-cli": "^22.2.3",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.3"
   },
   "overrides": {
     "webpack-dev-server": "^5.2.5",
