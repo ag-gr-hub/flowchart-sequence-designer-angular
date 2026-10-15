@@ -64,7 +64,7 @@
   "overrides": {
     "esbuild": "^0.28.1",
     "@babel/core": "^7.29.7",
-    "js-yaml": "^4.2.0"
+    "js-yaml": "^4.3.2"
   },
   "homepage": "https://ag-gr-hub.github.io/flowchart-sequence-designer-angular/",
   "bugs": {
