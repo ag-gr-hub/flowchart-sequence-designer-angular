@@ -12,9 +12,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {}
+    "rootDir": "./src"
   },
   "angularCompilerOptions": {
     "compilationMode": "partial",
