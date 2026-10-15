@@ -19,6 +19,9 @@
   bindings; `HttpTransferCache` information leak).
 - Regenerated the demo lockfile, removing vulnerable `hono`, `ip-address` and
   `http-cache-semantics` from the dependency tree.
+- Lockfile bumps for `fast-uri` 3.1.8 (GHSA-hrr3-gc8f-f4qj) and
+  `probe-image-size` 7.4.0 (GHSA-gjj5-9665-rwrc), both build-time only via
+  ng-packagr; raised the `js-yaml` override floor to `^4.3.2`.
 
 ## [0.4.0] — 2026-06-29
 
