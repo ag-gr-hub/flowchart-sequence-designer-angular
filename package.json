@@ -55,7 +55,7 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "rxjs": "^7.8.0",
-    "typescript": "~6.0.3",
+    "typescript": "~7.0.2",
     "zone.js": "^0.16.2"
   },
   "engines": {
