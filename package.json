@@ -40,7 +40,7 @@
     "@angular/platform-browser": "^22.2.3",
     "@angular/platform-browser-dynamic": "^22.2.3",
     "@jest/globals": "^30.5.1",
-    "@swc/core": "^1.15.33",
+    "@swc/core": "^1.16.18",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
     "@types/react": "^19.2.15",
