@@ -51,7 +51,7 @@
     "flowchart-sequence-designer": "^1.2.4",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.1",
-    "ng-packagr": "^22.2.4",
+    "ng-packagr": "^22.2.5",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "rxjs": "^7.8.0",
