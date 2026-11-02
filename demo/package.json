@@ -15,7 +15,7 @@
     "@angular/core": "^22.2.3",
     "@angular/platform-browser": "^22.2.3",
     "@angular/platform-browser-dynamic": "^22.2.3",
-    "@angular/router": "^22.2.3",
+    "@angular/router": "^22.2.4",
     "flowchart-sequence-designer": "^1.2.4",
     "react": "^19",
     "react-dom": "^19",
