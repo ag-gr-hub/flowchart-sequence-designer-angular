@@ -66,6 +66,7 @@ describe("FsdDiagramComponent", () => {
   });
 
   it("should wrap onExport callback in NgZone.run", async () => {
+    component.exportEvent.subscribe(() => {});
     component.ngOnInit();
     await flushPromises();
     const emitSpy = jest.spyOn(component.exportEvent, "emit");
@@ -73,6 +74,13 @@ describe("FsdDiagramComponent", () => {
     propsArg.onExport("svg", "<svg></svg>");
     expect(zone.run).toHaveBeenCalled();
     expect(emitSpy).toHaveBeenCalledWith({ format: "svg", content: "<svg></svg>" });
+  });
+
+  it("should leave onExport unset without a listener so the editor downloads", async () => {
+    component.ngOnInit();
+    await flushPromises();
+    const propsArg = (ReactBridge as jest.Mock).mock.calls[0][1];
+    expect(propsArg.onExport).toBeUndefined();
   });
 
   it("should update bridge on input changes (not initialModel)", async () => {
@@ -119,6 +127,29 @@ describe("FsdSequenceComponent", () => {
     await flushPromises();
     expect(ReactBridge).toHaveBeenCalled();
     expect(mockMount).toHaveBeenCalled();
+  });
+
+  it("should set onExport only when exportEvent has a listener", async () => {
+    const zone = createMockZone();
+    const create = () => {
+      const c = new FsdSequenceComponent(zone as any, { markForCheck() {}, detectChanges() {} } as any);
+      c.containerRef = { nativeElement: document.createElement("div") } as any;
+      return c;
+    };
+    (ReactBridge as jest.Mock).mockClear();
+
+    create().ngOnInit();
+    await flushPromises();
+    expect((ReactBridge as jest.Mock).mock.calls[0][1].onExport).toBeUndefined();
+
+    const bound = create();
+    const handler = jest.fn();
+    bound.exportEvent.subscribe(handler);
+    bound.ngOnInit();
+    await flushPromises();
+    (ReactBridge as jest.Mock).mock.calls[1][1].onExport("json", "{}");
+    expect(zone.run).toHaveBeenCalled();
+    expect(handler).toHaveBeenCalledWith({ format: "json", content: "{}" });
   });
 });
 

@@ -286,7 +286,7 @@ console.log(m.toMermaid());
 | Output | Payload | Description |
 |--------|---------|-------------|
 | `modelChange` | `DiagramModel` | Emitted on every edit |
-| `exportEvent` | `{ format, content }` | Emitted when user exports |
+| `exportEvent` | `{ format, content }` | Emitted when user exports. Binding it replaces the default browser download |
 
 **Note:** Changing `initialModel` after first render will re-mount the entire editor (full reset).
 
