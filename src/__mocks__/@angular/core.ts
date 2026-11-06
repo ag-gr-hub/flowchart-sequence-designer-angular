@@ -1,6 +1,9 @@
 // Minimal Angular core mocks for testing
 export class EventEmitter<T = any> {
   private listeners: ((value: T) => void)[] = [];
+  get observers(): ((value: T) => void)[] {
+    return this.listeners;
+  }
   emit(value: T): void {
     this.listeners.forEach((fn) => fn(value));
   }

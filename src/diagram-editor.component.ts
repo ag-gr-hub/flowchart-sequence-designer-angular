@@ -116,8 +116,13 @@ export class FsdDiagramComponent implements OnInit, OnChanges, OnDestroy {
     return {
       initialModel: this.initialModel,
       onChange: (model: DiagramModel) => this.zone.run(() => this.modelChange.emit(model)),
-      onExport: (format: ExportFormat, content: string | Blob) =>
-        this.zone.run(() => this.exportEvent.emit({ format, content })),
+      // The editor downloads the export itself unless onExport is set, so only take it
+      // over when the host listens. `observers` rather than `observed`: rxjs 6 lacks it.
+      onExport:
+        this.exportEvent.observers.length > 0
+          ? (format: ExportFormat, content: string | Blob) =>
+              this.zone.run(() => this.exportEvent.emit({ format, content }))
+          : undefined,
       height: "100%",
       allowedExports: this.allowedExports,
       allowImport: this.allowImport,

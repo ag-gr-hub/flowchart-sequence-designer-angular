@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
-import { JsonPipe } from '@angular/common';
 import {
   FsdDiagramComponent,
   FsdSequenceComponent,
   presetFlowchartModel,
   presetSequenceModel,
 } from '@flowchart-sequence-designer/angular';
-import type { DiagramModel, ExportFormat } from '@flowchart-sequence-designer/angular';
+import type { DiagramModel } from '@flowchart-sequence-designer/angular';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   preserveWhitespaces: true,
-  imports: [JsonPipe, FsdDiagramComponent, FsdSequenceComponent],
+  imports: [FsdDiagramComponent, FsdSequenceComponent],
   template: `
     <!-- Single top nav (mirrors React layout) -->
     <nav class="topnav" role="tablist" aria-label="Editor variants">
@@ -543,7 +542,6 @@ brand: Partial&lt;ThemeColors&gt; = {{ '{' }}
         [theme]="theme"
         [allowImport]="true"
         (modelChange)="onFlowchartChange($event)"
-        (exportEvent)="onExport($event)"
       />
     }
   `,
@@ -853,7 +851,6 @@ export class AppComponent {
   theme: 'light' | 'dark' | 'auto' = 'auto';
   tab: 'flowchart' | 'question' | 'journey' | 'sequence' | 'docs' = 'flowchart';
   themes: ('light' | 'dark' | 'auto')[] = ['light', 'auto', 'dark'];
-  lastExport: { format: string; preview: string } | null = null;
   editorHeight = '100%';
 
   private currentFlowchart = this.flowchartModel;
@@ -873,12 +870,5 @@ export class AppComponent {
 
   onSequenceChange(model: DiagramModel): void {
     this.currentSequence = model;
-  }
-
-  onExport(event: { format: ExportFormat; content: string | Blob }): void {
-    const preview = typeof event.content === 'string'
-      ? event.content.slice(0, 500)
-      : `[Blob: ${event.content.size} bytes]`;
-    this.lastExport = { format: event.format, preview };
   }
 }
