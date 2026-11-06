@@ -12,9 +12,15 @@
   previously `^20.19.0 || ^22.12.0 || >=24.0.0`. CI now tests Node 22 and 24.
 - Dropped tsconfig options deprecated in TypeScript 6 (`baseUrl`,
   `downlevelIteration`, `moduleResolution: node`).
+- CI now builds `demo/`, so demo dependency updates are compiled before merge.
 
 ### Security
 
+- Consolidated dev dependency updates for the library and demo. Clears the
+  `vite`, `follow-redirects`, `fast-uri`, `zod`, `body-parser` and
+  `serialize-javascript` advisories, and adds `minimatch` and `glob` overrides
+  because `eslint` and `jest` still request vulnerable ranges. All of these are
+  build-time only; the published package is unaffected.
 - Clears the Angular `<21.2.20` advisories (sanitization bypass via host
   bindings; `HttpTransferCache` information leak).
 - Regenerated the demo lockfile, removing vulnerable `hono`, `ip-address` and
