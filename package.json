@@ -40,23 +40,23 @@
     "@angular/platform-browser": "^22.2.3",
     "@angular/platform-browser-dynamic": "^22.2.3",
     "@jest/globals": "^30.5.1",
-    "@swc/core": "^1.15.33",
+    "@swc/core": "^1.16.22",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
-    "@types/react": "^19.2.15",
-    "@types/react-dom": "^19.2.7",
-    "@typescript-eslint/eslint-plugin": "^8.62.0",
-    "@typescript-eslint/parser": "^8.62.0",
-    "eslint": "^10.12.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.72.1",
+    "@typescript-eslint/parser": "^8.72.1",
+    "eslint": "^10.14.0",
     "flowchart-sequence-designer": "^1.2.4",
     "jest": "^30.5.2",
-    "jest-environment-jsdom": "^30.5.1",
-    "ng-packagr": "^22.2.4",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "jest-environment-jsdom": "^30.5.2",
+    "ng-packagr": "^22.2.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "rxjs": "^7.8.0",
     "typescript": "~6.0.3",
-    "zone.js": "^0.16.2"
+    "zone.js": "^0.16.3"
   },
   "engines": {
     "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
@@ -64,7 +64,9 @@
   "overrides": {
     "esbuild": "^0.28.1",
     "@babel/core": "^7.29.7",
-    "js-yaml": "^4.3.2"
+    "js-yaml": "^4.3.2",
+    "minimatch": "^11.0.1",
+    "glob": "^14.0.2"
   },
   "homepage": "https://ag-gr-hub.github.io/flowchart-sequence-designer-angular/",
   "bugs": {

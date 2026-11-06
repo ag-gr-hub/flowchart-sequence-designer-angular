@@ -18,8 +18,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            demo/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
+      # The demo has its own lockfile and is what Pages deploys, so build it too.
+      # Without this, /demo dependency PRs go green without ever being compiled.
+      - run: npm ci
+        working-directory: demo
+      - run: npx ng build
+        working-directory: demo

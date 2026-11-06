@@ -5,11 +5,21 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+    ignore:
+      # @angular/compiler-cli and ng-packagr peer on typescript >=6.0 <6.1.
+      # Remove once Angular supports a newer TypeScript.
+      - dependency-name: typescript
+        versions: [">=6.1.0"]
   - package-ecosystem: npm
     directory: "/demo"
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    ignore:
+      # @angular/compiler-cli and ng-packagr peer on typescript >=6.0 <6.1.
+      # Remove once Angular supports a newer TypeScript.
+      - dependency-name: typescript
+        versions: [">=6.1.0"]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
