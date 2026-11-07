@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **Export buttons now download when `(exportEvent)` isn't bound.** `<fsd-diagram>`
+  and `<fsd-sequence>` always intercepted exports, so hosts without a listener got
+  a success toast and no file. Binding `(exportEvent)` still replaces the download.
+  The listener must be attached before the editor loads, as a template binding is.
+- The demo's Export buttons now download a file.
+
 ### Changed
 
 - **Build toolchain moved to Angular 22** (`@angular/*` `^22.2.3`, ng-packagr
@@ -13,6 +21,7 @@
 - Dropped tsconfig options deprecated in TypeScript 6 (`baseUrl`,
   `downlevelIteration`, `moduleResolution: node`).
 - CI now builds `demo/`, so demo dependency updates are compiled before merge.
+- CI now runs a Playwright suite against the demo (`npm run test:e2e`).
 
 ### Security
 
