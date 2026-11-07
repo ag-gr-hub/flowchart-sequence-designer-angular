@@ -34,5 +34,5 @@ jobs:
         working-directory: demo
       - run: npx ng build --configuration development --output-path dist-e2e
         working-directory: demo
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --only-shell chromium
       - run: npm run test:e2e
