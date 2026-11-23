@@ -50,7 +50,7 @@
     "@types/react-dom": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.72.1",
     "@typescript-eslint/parser": "^8.72.1",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "flowchart-sequence-designer": "^1.2.4",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
